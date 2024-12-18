@@ -405,6 +405,9 @@ int main(int argc, char *argv[])
       {
         measure_spectrum_discon_semwall(nm, m, mes_var.nhits_disc, i, mes_var.precision,DONTSTORE, NULL);
       }
+      if (mes_var.discon_semwall_smeared){
+        measure_spectrum_discon_semwall_smeared(nm,m,mes_var.nhits_disc,i,mes_var.precision,mes_var.smear_epsilon_source,mes_var.smear_N_source, mes_var.APE_epsilon, mes_var.APE_N, mes_var.smear_N_step);
+      }
       if (mes_var.discon_gfwall)
       {
         //       measure_spectrum_discon_gfwall(nm,m,i,mes_var.precision,DONTSTORE, NULL);

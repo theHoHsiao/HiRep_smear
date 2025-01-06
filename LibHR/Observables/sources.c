@@ -729,9 +729,9 @@ void smearing_function(spinor_field *source, int tau, double epsilon){
    * \Phi is the smearing function, q(x) is the source field, U_{\mu}(x) is the link variable in the \mu direction.
    * d = 3 for spatial directions.
    * 
-   * q -> `source`
-   * \epsilon -> `epsilon`
-   * `tau` is the time slice where the source is located.
+   * @param source -> the source field, q(x).
+   * @param epsilon -> the smearing parameter, \epsilon
+   * @param tau is the time slice where the source is located.
    */
     
     int ix, x, y, z, ix_up, ix_right, ix_front, ix_left, ix_back, ix_down;
@@ -888,8 +888,9 @@ void create_smeared_source(spinor_field *source, int t, int x, int y, int z, int
   /**
    * This function creates a smeared source field at a given position (t,x,y,z) with a given color by applying
    * the Wuppertal smearing function based on Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf.
-   * `Nsmear` is the iteration number at the source
-   * `epsilon` is the step size.
+   * @param Nsmear is the iteration number at the source
+   * @param epsilon is the step size.
+   * 
    * The gauge field is the original one.
    */
     
@@ -914,8 +915,10 @@ void create_smeared_source_with_APE(spinor_field *source, int t, int x, int y, i
   /**
    * This function creates a smeared source field at a given position (t,x,y,z) with a given color by applying
    * the Wuppertal smearing function based on Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf.
-   * `Nsmear` is the iteration number at the source
-   * `epsilon` is the step size.
+   * 
+   * @param Nsmear is the iteration number at the source
+   * @param epsilon is the step size.
+   * 
    * The gauge field is the APE smeared one.
    */
     int beta;

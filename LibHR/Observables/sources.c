@@ -89,6 +89,11 @@ static int random_tau()
 						source[spin](t,x) = \sum_{x%p == 0} \delta_{s spin} 1_color
 
                 z2_volume_source:                  source[spin](t,x) = Z(2) x Z(2) (no dilution)
+    smeared_source:
+              Wuppertal smeared source, see Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf.
+              The involving gauge field is the original one.
+    smeared_source_with_APE:
+              Wuppertal smearing with APE smeared gauge field.
 \***************************************************************************/
 void create_point_source(spinor_field *source, int tau, int color)
 {
@@ -714,9 +719,20 @@ void zero_even_or_odd_site_spinorfield(spinor_field *source, int nspinor, int eo
 }
 
 
-/* Updates of Wuppertal smearing source in 2020 */
+/* Updates for Wuppertal smearing source by HH in 2020*/
 
-void smearing_function(spinor_field *source, int tau, int color, double epsilon){
+void smearing_function(spinor_field *source, int tau, double epsilon){
+  /**
+   * This function applies the Wuppertal smearing to the source field.
+   * The smearing is done in the spatial directions only, basing on Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf:
+   * \Phi q(x) = 1/(1+2d\epsilon)[ q(x) + \epsilon\sum_{\mu=1}^{3} U_{\mu}(x)q(x+\mu) ]
+   * \Phi is the smearing function, q(x) is the source field, U_{\mu}(x) is the link variable in the \mu direction.
+   * d = 3 for spatial directions.
+   * 
+   * q -> `source`
+   * \epsilon -> `epsilon`
+   * `tau` is the time slice where the source is located.
+   */
     
     int ix, x, y, z, ix_up, ix_right, ix_front, ix_left, ix_back, ix_down;
     double norm_factor = 1./(1.+6.*epsilon);
@@ -729,9 +745,10 @@ void smearing_function(spinor_field *source, int tau, int color, double epsilon)
         spinor_field_zero_f(&smeared_source[beta]);
     }
     
-    if(COORD[0]==tau/T){
+    if(COORD[0]==tau/T){ // apply the smearing only on the time slice where the source is located.
         for (x=0; x<X; x++) for (y=0; y<Y; y++) for (z=0; z<Z; z++){
             
+            // assign the positions: a site (tau, x, y, z) and its neighbors in the spatial directions.
             ix = ipt(tau - zerocoord[0], x,y,z);
             ix_right = iup(ix,1);
             ix_left  = idn(ix,1);
@@ -743,8 +760,8 @@ void smearing_function(spinor_field *source, int tau, int color, double epsilon)
     
     
             for (int spin=0;spin<4;spin++){
-                spinor_OG    = *_FIELD_AT(&source[spin], ix);
-                spinor_right = *_FIELD_AT(&source[spin], ix_right);
+                spinor_OG    = *_FIELD_AT(&source[spin], ix); // OG: original spinor field at (x,y,z).
+                spinor_right = *_FIELD_AT(&source[spin], ix_right); 
                 spinor_left  = *_FIELD_AT(&source[spin], ix_left);
                 spinor_front = *_FIELD_AT(&source[spin], ix_front);
                 spinor_back  = *_FIELD_AT(&source[spin], ix_back);
@@ -753,7 +770,8 @@ void smearing_function(spinor_field *source, int tau, int color, double epsilon)
                         
         
                 _spinor_zero_f(spinor_smeared);
-        
+
+                // mutiply the spinor fields with link variable in the spatial directions and add to the smearing field.
                 _suNf_multiply(spinor_tmp.c[spin], *pu_gauge_f(ix,1), spinor_right.c[spin]);
                 _vector_mul_add_assign_f(spinor_smeared.c[spin], epsilon*norm_factor, spinor_tmp.c[spin]);
         
@@ -779,6 +797,7 @@ void smearing_function(spinor_field *source, int tau, int color, double epsilon)
         }
     }
     
+    // beta is the spinor index.
     for (int beta=0;beta<4;++beta){
         spinor_field_copy_f(source + beta, smeared_source +beta);
     }
@@ -791,7 +810,12 @@ void smearing_function(spinor_field *source, int tau, int color, double epsilon)
     free_spinor_field_f(smeared_source);
 }
 
-void smearing_function_with_APE(spinor_field *source, int tau, int color, double epsilon){
+void smearing_function_with_APE(spinor_field *source, int tau, double epsilon){
+  /**
+   * This function applies the Wuppertal smearing to the source field with APE smeared gauge field,
+   * which is similar to the function `smearing_function` but changes the gauge field to the APE smeared one:
+   * `pu_gauge_f` -> `pu_gauge_APE_f`
+   */
     
     int ix, x, y, z, ix_up, ix_right, ix_front, ix_left, ix_back, ix_down;
     double norm_factor = 1./(1.+6.*epsilon);
@@ -861,6 +885,13 @@ void smearing_function_with_APE(spinor_field *source, int tau, int color, double
 }
 
 void create_smeared_source(spinor_field *source, int t, int x, int y, int z, int color, double epsilon, int Nsmear){
+  /**
+   * This function creates a smeared source field at a given position (t,x,y,z) with a given color by applying
+   * the Wuppertal smearing function based on Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf.
+   * `Nsmear` is the iteration number at the source
+   * `epsilon` is the step size.
+   * The gauge field is the original one.
+   */
     
     int beta;
     
@@ -875,12 +906,18 @@ void create_smeared_source(spinor_field *source, int t, int x, int y, int z, int
     
     for (int n=0;n<Nsmear;n++){
         lprintf("SMEAR",0,"%d...", n+1);
-        smearing_function(source, t, color, epsilon);
+        smearing_function(source, t, epsilon);
     }
 }
 
 void create_smeared_source_with_APE(spinor_field *source, int t, int x, int y, int z, int color, double epsilon, int Nsmear){
-    
+  /**
+   * This function creates a smeared source field at a given position (t,x,y,z) with a given color by applying
+   * the Wuppertal smearing function based on Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf.
+   * `Nsmear` is the iteration number at the source
+   * `epsilon` is the step size.
+   * The gauge field is the APE smeared one.
+   */
     int beta;
     
     for (beta=0;beta<4;++beta){
@@ -894,7 +931,7 @@ void create_smeared_source_with_APE(spinor_field *source, int t, int x, int y, i
     
     for (int n=0;n<Nsmear;n++){
         lprintf("SMEAR",0,"%d...", n+1);
-        smearing_function_with_APE(source, t, color, epsilon);
+        smearing_function_with_APE(source, t, epsilon);
     }
 }
 

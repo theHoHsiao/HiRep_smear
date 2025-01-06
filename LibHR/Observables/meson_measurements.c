@@ -768,7 +768,7 @@ void measure_formfactor_fixed(int ti, int tf, int dt, int nm, double *m, int n_m
 
 void create_smear_source_and_measure(spinor_field* source, spinor_field* prop, int t, int x, int y, int z, int nm, double* m, int n_mom, double epsilon_source, int Nsmear_source, int APE_N,int conf_num, char* label) {
   /**
-   * This function creates a smeared source and measures the meson correlators.
+   * This function creates a smeared source and measures the meson correlators with point sink.
    * The APE smearing on the gauge links are applied if `APE_N` is not 0.
    */
   for (int  k = 0;k<NF;++k){
@@ -824,7 +824,8 @@ void smear_sink_and_measure(spinor_field* prop, spinor_field* source, int nm, do
 void measure_smearing_source_sink(int t, int x, int y, int z, int nm, double* m, int n_mom, int nhits, int conf_num, double precision, double epsilon_source, int Nsmear_source_max, double epsilon_sink, int Nsmear_sink, double APE_epsilon, int APE_N, int N_diff){
     /**
      * This function measures the meson correlators with smeared source and sink.
-     * It measures the meson correlators for all combinations of the source and sink smearing steps, [0, Nsmear_source_max] and [0, Nsmear_sink], respectively.
+     * It measures the meson correlators for all combinations of the source and sink smearing steps,
+     * [0, Nsmear_source_max] and [0, Nsmear_sink], respectively, with a separation of `N_diff`.
      * 
      * The APE smearing on the gauge links are applied if `APE_N` is not 0.
      */
@@ -854,7 +855,7 @@ void measure_smearing_ss(int t, int x, int y, int z, int nm, double* m, int n_mo
   /**
    * This function measures the meson correlators with smeared source and sink.
    * It measures the meson correlators for a specifc source smearing steps, Nsmear_source,
-   * while the sink smearing step is [0, Nsmear_sink].
+   * while the sink smearing steps are in the range of [0, Nsmear_sink] with a separation of `N_diff` .
    * 
    * The APE smearing on the gauge links are applied if `APE_N` is not 0.
    */

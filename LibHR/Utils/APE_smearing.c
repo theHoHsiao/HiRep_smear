@@ -27,7 +27,7 @@ void APE_smearing(double smear_val, int Nsmear){
      * APE smearing function is used to smooth the gauge field, we take the defination
      * from Eq. (16) in https://arxiv.org/abs/hep-lat/0409141v2.
      * 
-     * @param smear_val: Smearing parameter \alpha in the reference
+     * @param smear_val: Smearing parameter $\alpha$ in the reference
      * @param Nsmear: Number of smearing iterations.
      */
 

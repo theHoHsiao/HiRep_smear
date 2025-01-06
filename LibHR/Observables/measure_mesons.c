@@ -629,7 +629,7 @@ void print_mesons(meson_observable *mo, double norm, int conf, int nm, double *m
 
 void smeared_propagator(spinor_field* psi, int nm , double epsilon){
     /**
-     * @brief Smears the propagator field `psi` with the Wuppertal smearing with parameter `epsilon` and one iteration.
+     * @brief Smears the propagator field `psi` with the Wuppertal smearingwith parameter `epsilon` and one iteration, without APE smearing.
      * The smearing function is defined as Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf.
      * See also disucssion in the paragraph below Eq. (21) in the same paper.
      * 
@@ -719,6 +719,18 @@ void smeared_propagator(spinor_field* psi, int nm , double epsilon){
 }
 
 void smeared_propagator_with_APE(spinor_field* psi, int nm , double epsilon){
+  /**
+     * @brief Smears the propagator field `psi` with the Wuppertal smearing with parameter `epsilon` and one iteration.
+     * The smearing function is defined as Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf.
+     * See also disucssion in the paragraph below Eq. (21) in the same paper.
+     * 
+     * @param psi The propagator field to be smeared, $S$ in the paper.
+     * @param nm The number of masses
+     * @param epsilon The smearing step size, $\epsilon$ in Eq. (9).
+     * 
+     * The gauge field is smeared with APE smearing before the Wuppertal smearing of the propagator field.
+     */
+
     
     int i,t, x, y, z, ix, ix_up, ix_right, ix_front, ix_left, ix_back, ix_down;
     double norm_factor = 1./(1.+6.*epsilon);
@@ -800,6 +812,8 @@ void smeared_propagator_with_APE(spinor_field* psi, int nm , double epsilon){
     }
     free_spinor_field_f(smeared_psi);
 }
+
+
 // FZ (2024): Smeared propagator with a single source
 void smeared_propagator_volume(spinor_field* psi, int nm , double epsilon){
     int i,t, x, y, z, ix, ix_up, ix_right, ix_front, ix_left, ix_back, ix_down;

@@ -1,9 +1,9 @@
 //
 //  APE_smearing.c
-//  hr
 //
-//  Created by Paul Xiao on 2020/11/2.
-//  Copyright © 2020 Claudio Pica. All rights reserved.
+//  Code added by HH on 2020.11.2 for APE smearing,
+//  based on the function written in Fortran provided by Davide Vadacchino.
+//  
 //
 
 #include <stdio.h>
@@ -23,14 +23,21 @@
 #include "update.h"
 
 void APE_smearing(double smear_val, int Nsmear){
+    /**
+     * APE smearing function is used to smooth the gauge field, we take the defination
+     * from Eq. (16) in https://arxiv.org/abs/hep-lat/0409141v2.
+     * 
+     * @param smear_val: Smearing parameter \alpha in the reference
+     * @param Nsmear: Number of smearing iterations.
+     */
 
     suNg staple, tr1, tr2;
     int ix, iy, iz, it;
     int mu, nu, mid, midpmu, midpnu, midmnu, midpmumnu;
     suNg v, vout, vtmp;
     
-    double sm1 = 1. - smear_val;
-    double sm2 = smear_val / 6. ;
+    double sm1 = 1. - smear_val;  // ( 1 - \alpha )
+    double sm2 = smear_val / 6. ; // ( \alpha \ 6 )
     
     suNg_field *u_gauge_tmp = alloc_gfield(&glattice);
     u_gauge_APE = alloc_gfield(&glattice);
@@ -91,7 +98,7 @@ void APE_smearing(double smear_val, int Nsmear){
                     _suNg_add_assign(vout,tr2);
                     
                     _suNg_mul(vtmp, 1., vout);
-                    project_to_suNg(&vout);
+                    project_to_suNg(&vout); // Project to the group manifold
                     
                     #ifdef GAUGE_SPN
                     cooling_SPN(&v, &vout, &vtmp, 5); // max Re Tr(U V^+)

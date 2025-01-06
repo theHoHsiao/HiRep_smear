@@ -2,7 +2,7 @@
 //  APE_smearing.c
 //
 //  Code added by HH on 2020.11.2 for APE smearing,
-//  based on the function written in Fortran provided by Davide Vadacchino.
+//  based on the functions written in Fortran provided by Davide Vadacchino.
 //  
 //
 

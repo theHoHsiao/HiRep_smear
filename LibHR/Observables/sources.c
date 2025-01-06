@@ -719,18 +719,18 @@ void zero_even_or_odd_site_spinorfield(spinor_field *source, int nspinor, int eo
 }
 
 
-/* Updates for Wuppertal smearing source by HH in 2020*/
+/* Updates for Wuppertal smearing by HH in 2020*/
 
 void smearing_function(spinor_field *source, int tau, double epsilon){
   /**
    * This function applies the Wuppertal smearing to the source field.
    * The smearing is done in the spatial directions only, basing on Eq. (9) in https://arxiv.org/pdf/1602.05525.pdf:
-   * \Phi q(x) = 1/(1+2d\epsilon)[ q(x) + \epsilon\sum_{\mu=1}^{3} U_{\mu}(x)q(x+\mu) ]
-   * \Phi is the smearing function, q(x) is the source field, U_{\mu}(x) is the link variable in the \mu direction.
-   * d = 3 for spatial directions.
+   * $\Phi q(x) = 1/(1+2d\epsilon)[ q(x) + \epsilon\sum_{\mu=1}^{3} U_{\mu}(x)q(x+\mu) ]$
+   * $\Phi$ is the smearing function, $q(x)$ is the source field, $U_{\mu}(x)$ is the link variable in the $\mu$ direction.
+   * $d = 3$ for spatial directions.
    * 
-   * @param source -> the source field, q(x).
-   * @param epsilon -> the smearing parameter, \epsilon
+   * @param source -> the source field, $q(x)$.
+   * @param epsilon -> the smearing parameter, $\epsilon$.
    * @param tau is the time slice where the source is located.
    */
     

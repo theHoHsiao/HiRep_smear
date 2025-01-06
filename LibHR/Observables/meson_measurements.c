@@ -764,7 +764,7 @@ void measure_formfactor_fixed(int ti, int tf, int dt, int nm, double *m, int n_m
 
 
 
-/* Updates for Wuppertal smearing source by HH in 2020*/
+/* Updates for Wuppertal smearing by HH in 2020*/
 
 void create_smear_source_and_measure(spinor_field* source, spinor_field* prop, int t, int x, int y, int z, int nm, double* m, int n_mom, double epsilon_source, int Nsmear_source, int APE_N,int conf_num, char* label) {
   /**
@@ -793,7 +793,7 @@ void create_smear_source_and_measure(spinor_field* source, spinor_field* prop, i
 
 void smear_sink_and_measure(spinor_field* prop, spinor_field* source, int nm, double* m, int t, int n_mom, int Nsmear_source, double epsilon_sink, int Nsmear_sink, int N_diff, int APE_N, int conf_num, char* label) {
     /**
-     * This function smears the sink and measures the meson correlators.
+     * This function smears the sink and measures the meson correlators, with the smearing steps from 0 to `Nsmear_sink` with a step of `N_diff`.
      * The APE smearing on the gauge links are applied if `APE_N` is not 0.
      * The numbers of the smearing iterations at the sink are from 0 to `Nsmear_sink` with a step of `N_diff`.
      */
@@ -822,7 +822,12 @@ void smear_sink_and_measure(spinor_field* prop, spinor_field* source, int nm, do
 
 
 void measure_smearing_source_sink(int t, int x, int y, int z, int nm, double* m, int n_mom, int nhits, int conf_num, double precision, double epsilon_source, int Nsmear_source_max, double epsilon_sink, int Nsmear_sink, double APE_epsilon, int APE_N, int N_diff){
-    
+    /**
+     * This function measures the meson correlators with smeared source and sink.
+     * It measures the meson correlators for all combinations of the source and sink smearing steps, [0, Nsmear_source_max] and [0, Nsmear_sink], respectively.
+     * 
+     * The APE smearing on the gauge links are applied if `APE_N` is not 0.
+     */
     char label[20];    
     if (APE_N != 0){
         APE_smearing(APE_epsilon, APE_N);
@@ -846,7 +851,14 @@ void measure_smearing_source_sink(int t, int x, int y, int z, int nm, double* m,
 }
 
 void measure_smearing_ss(int t, int x, int y, int z, int nm, double* m, int n_mom, int nhits, int conf_num, double precision, double epsilon_source, int Nsmear_source, double epsilon_sink, int Nsmear_sink, double APE_epsilon, int APE_N, int N_diff){
-    
+  /**
+   * This function measures the meson correlators with smeared source and sink.
+   * It measures the meson correlators for a specifc source smearing steps, Nsmear_source,
+   * while the sink smearing step is [0, Nsmear_sink].
+   * 
+   * The APE smearing on the gauge links are applied if `APE_N` is not 0.
+   */
+
   char label[20];    
   if (APE_N != 0){
     APE_smearing(APE_epsilon, APE_N);

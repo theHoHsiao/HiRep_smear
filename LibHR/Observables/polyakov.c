@@ -457,11 +457,13 @@ void polyakov()
 }
 #endif
 
-#undef MPIRET
-#undef _MIN
-
 
 void polyakov_APE() {
+  /**
+   * @brief Computes the value of polyakov loop for the APE-smeared gauge links.
+   *        Modified from `polyakov()` by changing `pu_gauge(...)` to `pu_gauge_APE(...)`
+   * 
+   */
   int x[4], i4d, i3d, size3d;
   int loc[4]={T,X,Y,Z};
   suNg *p;
@@ -707,3 +709,6 @@ void polyakov_APE() {
     
   }
 }
+
+#undef MPIRET
+#undef _MIN

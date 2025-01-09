@@ -60,7 +60,7 @@ void APE_smearing(double smear_val, int Nsmear){
     represent_gauge_field_APE();
     
     lprintf("APE",0,"APE smearing with val=%f \n", smear_val);
-    lprintf("APE",0,"N=0 <p>_s = %1.6f\n",avr_spacial_plaquette_APE());
+    lprintf("APE",0,"N=0 <p>_s = %1.6f\n",avr_spatial_plaquette_APE());
     
     for (int N=0; N<Nsmear; N++){
         
@@ -127,7 +127,7 @@ void APE_smearing(double smear_val, int Nsmear){
         represent_gauge_field_APE();
         
     }
-    lprintf("APE",0,"N=%d <p>_s = %1.6f\n", Nsmear, avr_spacial_plaquette_APE());
+    lprintf("APE",0,"N=%d <p>_s = %1.6f\n", Nsmear, avr_spatial_plaquette_APE());
     polyakov_APE();
     full_plaquette_APE();
     lprintf("APE",0,"APE smearing END \n");

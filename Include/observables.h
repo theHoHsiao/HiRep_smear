@@ -299,7 +299,7 @@ void ff_observables();
 //APE smearing
 double plaq_APE(int ix,int mu,int nu);
 void cplaq_APE(complex *ret,int ix,int mu,int nu);
-double avr_spacial_plaquette_APE();
+double avr_spatial_plaquette_APE();
 void full_plaquette_APE();
 void polyakov_APE();
 

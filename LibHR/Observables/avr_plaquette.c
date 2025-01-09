@@ -418,8 +418,17 @@ double complex avr_plaquette_wrk()
 }
 
 
-double plaq_APE(int ix,int mu,int nu)
-{
+double plaq_APE(int ix,int mu,int nu){
+  /**
+   * @brief Computes the value of the plaquette at the given position in the mu-nu plane and return only the real part.
+   *        Modified from `plaq(int ix, int mu, int nu)` by changing `pu_gauge` to `pu_gauge_APE`
+   * 
+   * @param ix The position of the starting site.
+   * @param mu The first direction of the plaquette.
+   * @param nu The second direction of the plaquette.
+   * 
+   * @return The real part of the computed plaquette value, possibly weighted if PLAQ_WEIGHTS is defined.
+   */
   int iy,iz;
   double p;
   suNg *v1,*v2,*v3,*v4,w1,w2,w3;
@@ -446,8 +455,19 @@ double plaq_APE(int ix,int mu,int nu)
 #endif
 }
 
-void cplaq_APE(complex *ret,int ix,int mu,int nu)
-{
+
+void cplaq_APE(complex *ret,int ix,int mu,int nu){
+  /**
+   * @brief Computes the value of the plaquette at the given position in the mu-nu plane.
+   *        Modified from `cplaq(complex *ret,int ix,int mu,int nu)` by changing `pu_gauge` to `pu_gauge_APE`
+   * 
+   * @param ret A pointer to store the resulting complex plaquette value.
+   * @param ix The position of the starting site.
+   * @param mu The first direction of the plaquette.
+   * @param nu The second direction of the plaquette.
+   * 
+   * @note If PLAQ_WEIGHTS is defined, the result may include a weighting factor.
+   */
   int iy,iz;
   suNg *v1,*v2,*v3,*v4,w1,w2,w3;
   double tmpre = 0.;
@@ -481,8 +501,13 @@ void cplaq_APE(complex *ret,int ix,int mu,int nu)
 }
 
 
-double avr_spacial_plaquette_APE()
-{
+double avr_spatial_plaquette_APE(){
+  /**
+   * @brief Computes the average (over the whole lattice) plaquette value over all spatial directions 
+   *        for the APE-smeared gauge links.
+   *        Modified from `avr_spatial_plaquette()` by changing `plaq()` to `plaq_APE()`
+   * 
+   */
   double pa=0.;
 
   _PIECE_FOR(&glattice,ixp) {
@@ -512,8 +537,15 @@ double avr_spacial_plaquette_APE()
 
 }
 
-void full_plaquette_APE()
-{
+void full_plaquette_APE(){
+  /**
+   * @brief Computes and prints the average plaquette value over all directions, 
+   *        including the temporal direction, for the APE-smeared gauge links.
+   *        Modified from `ull_plaquette())` by changing `cplaq(...)` to `cplaq_APE(...)`
+   * 
+   * @note APE smearing is not applied in the temporal direction. 
+   *       As a result, plaquette values involving the temporal direction are zero.
+   */
 
     static double complex pa[6];
     static double complex r0;

@@ -470,7 +470,19 @@ void cooling_SPN(suNg* g_out, suNg* g_in, suNg* g_tilde, int cooling){
     _suNg_expand( S, *g_in);
         
     for (int nbcool=0;nbcool<cooling;nbcool++){
-        _suNgfull_times_suNgfull_dagger(B, S, U_tilde);
+        
+        _suNgfull_dagger_times_suNgfull(B, U_tilde, S);
+        
+        //print the B matrix for debug
+        
+        lprintf("DEBUG", 2, "Matrix B = S * U_tilde^dagger before cooling step %d:\n", nbcool);
+        for (int i=0;i<NG;i++){
+            for (int j=0;j<NG;j++){
+                lprintf("DEBUG", 2, "(%1.16f,%1.16f) ", creal(B.c[i + j*NG]), cimag(B.c[i + j*NG]));
+            }
+            lprintf("DEBUG", 2, "\n");
+        }
+                
         
         for (int N1=0;N1<NG/2-1;N1++){
             for (int N2=N1+1;N2<NG/2;N2++){
@@ -510,8 +522,9 @@ void subgrb(int i1col, int i2col, suNgfull* B11, suNgfull* C11){
     
     i1 = i1col + i1col*NG;
     i2 = i2col + i2col*NG;
-    i3 = i2col + i1col*NG;
-    i4 = i1col + i2col*NG;
+    
+    i4 = i2col + i1col*NG;
+    i3 = i1col + i2col*NG;
     
     _complex_add_star(F11, B11->c[i1], B11->c[i2]);
     _complex_mulr(F11, 0.5, F11);
@@ -531,6 +544,11 @@ void subgrb(int i1col, int i2col, suNgfull* B11, suNgfull* C11){
     _complex_star(A11[1], F12);
     _complex_mulr(A11[2], -1., F12);
     _complex_mulr(A11[3],  1., F11);
+
+    // print the SU(2) matrix for debug
+    lprintf("DEBUG", 2, "Extracted SU(2) matrix:\n");
+    lprintf("DEBUG", 2, "(%1.16f,%1.16f) (%1.16f,%1.16f)\n", creal(A11[0]), cimag(A11[0]), creal(A11[1]), cimag(A11[1]));
+    lprintf("DEBUG", 2, "(%1.16f,%1.16f) (%1.16f,%1.16f)\n", creal(A11[2]), cimag(A11[2]), creal(A11[3]), cimag(A11[3]));
     
     vmxsu2(i1col,i2col,C11,A11);
     vmxsu2(i1col,i2col,B11,A11);
@@ -555,18 +573,18 @@ void vmxsu2(int i1, int i2, suNgfull* A, double complex B[4]){
     double complex ztmp1,ztmp2;
     
     for (int i=0; i<NG; i++){
-        _complex_mul(ztmp1, A->c[i + i1*NG], B[0]);
-        _complex_mul(ztmp2, A->c[i + i2*NG], B[2]);
+        _complex_mul(ztmp1, A->c[i1 + i*NG], B[0]);
+        _complex_mul(ztmp2, A->c[i2 + i*NG], B[2]);
         _complex_add(C[i], ztmp1, ztmp2);
         
-        _complex_mul(ztmp1, A->c[i + i1*NG], B[1]);
-        _complex_mul(ztmp2, A->c[i + i2*NG], B[3]);
+        _complex_mul(ztmp1, A->c[i1 + i*NG], B[1]);
+        _complex_mul(ztmp2, A->c[i2 + i*NG], B[3]);
         _complex_add(C[i+NG], ztmp1, ztmp2);
     }
     
     for (int i=0; i<NG; i++){
-        A->c[i + i1*NG] = C[i];
-        A->c[i + i2*NG] = C[i+NG];
+        A->c[i1 + i*NG] = C[i]; 
+        A->c[i2 + i*NG] = C[i+NG];
     }
 }
 
@@ -592,8 +610,9 @@ void subgrb_tau(int n1, int n2, suNgfull* B11, suNgfull* C11){
     
     i1 = n1 + n1*NG;
     i2 = (NG/2) + n2 + (NG/2 + n2)*NG;
-    i3 = NG/2 + n2 + n1*NG;
-    i4 = (NG/2 + n2)*NG + n1;
+
+    i4 = NG/2 + n2 + n1*NG;
+    i3 = (NG/2 + n2)*NG + n1;
     
     _complex_add_star(F11, B11->c[i1], B11->c[i2]);
     _complex_mulr(F11, 0.5, F11);
@@ -612,6 +631,12 @@ void subgrb_tau(int n1, int n2, suNgfull* B11, suNgfull* C11){
     _complex_star(A11[1], F12);
     _complex_mulr(A11[2], -1., F12);
     _complex_mulr(A11[3],  1., F11);
+
+    // print the SU(2) matrix for debug
+    lprintf("DEBUG", 2, "Extracted SU(2) tau matrix:\n");
+    lprintf("DEBUG", 2, "(%1.16f,%1.16f) (%1.16f,%1.16f)\n", creal(A11[0]), cimag(A11[0]), creal(A11[1]), cimag(A11[1]));
+    lprintf("DEBUG", 2, "(%1.16f,%1.16f) (%1.16f,%1.16f)\n", creal(A11[2]), cimag(A11[2]), creal(A11[3]), cimag(A11[3]));
+
     
     vmxsu2_tau(n1, n2, C11, A11);
     vmxsu2_tau(n1, n2, B11, A11);
@@ -640,21 +665,21 @@ void vmxsu2_tau(int n1, int n2, suNgfull* A, complex B[4]){
     
     for (int i=0; i<NG; i++){
         
-        _complex_mul(ztmp1, A->c[i + n1*NG], B[0]);
-        _complex_mul(ztmp2, A->c[i +(NG/2+n2)*NG], B[2]);
-        _complex_add(C.c[i + n1*NG], ztmp1, ztmp2);
+        _complex_mul(ztmp1, A->c[n1 + i*NG], B[0]);
+        _complex_mul(ztmp2, A->c[(NG/2+n2) + i*NG], B[2]);
+        _complex_add(C.c[n1 + i*NG], ztmp1, ztmp2);
         
-        _complex_mul(ztmp1, A->c[i + n2*NG], B[0]);
-        _complex_mul(ztmp2, A->c[i + (NG/2+n1)*NG], B[2]);
-        _complex_add(C.c[i + n2*NG], ztmp1, ztmp2);
+        _complex_mul(ztmp1, A->c[n2 + i*NG], B[0]);
+        _complex_mul(ztmp2, A->c[(NG/2+n1) + i*NG], B[2]);
+        _complex_add(C.c[n2 + i*NG], ztmp1, ztmp2);
         
-        _complex_mul(ztmp1, A->c[i + n2*NG], B[1]);
-        _complex_mul(ztmp2, A->c[i + (NG/2+n1)*NG], B[3]);
-        _complex_add(C.c[i + (NG/2 + n1)*NG], ztmp1, ztmp2);
+        _complex_mul(ztmp1, A->c[n2 + i*NG], B[1]);
+        _complex_mul(ztmp2, A->c[(NG/2+n1) + i*NG], B[3]);
+        _complex_add(C.c[(NG/2 + n1) + i*NG], ztmp1, ztmp2);
         
-        _complex_mul(ztmp1, A->c[i + n1*NG], B[1]);
-        _complex_mul(ztmp2, A->c[i + (NG/2+n2)*NG], B[3]);
-        _complex_add(C.c[i + (NG/2 + n2)*NG], ztmp1, ztmp2);
+        _complex_mul(ztmp1, A->c[n1 + i*NG], B[1]);
+        _complex_mul(ztmp2, A->c[(NG/2+n2) + i*NG], B[3]);
+        _complex_add(C.c[(NG/2 + n2) + i*NG], ztmp1, ztmp2);
     }
     _suNgfull_mul(*A, 1., C);
 }

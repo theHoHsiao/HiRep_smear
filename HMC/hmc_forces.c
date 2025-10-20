@@ -32,7 +32,6 @@
 #include "cinfo.c"
 #include "representation.h"
 #include "linear_algebra.h"
-#include "setup.h"
 
 
 
@@ -170,6 +169,7 @@ int main(int argc,char *argv[]) {
   }
   lprintf("MAIN",0,"Compiled with macros: %s\n",MACROS);
   error(1,1,"MAIN","Need to set MEASURE_FORCE macro for program to measure forces\n"); 
+  (void) CI_svnrevision;
 }
 #else
   FILE* list;
@@ -215,13 +215,15 @@ int main(int argc,char *argv[]) {
     read_ranlxd_state(rlx_var.rlxd_state);
   } else {
     lprintf("MAIN",0,"RLXD [%d,%d]\n",rlx_var.rlxd_level,rlx_var.rlxd_seed+MPI_PID);
-    rlxd_init(rlx_var.rlxd_level,rlx_var.rlxd_seed); 
+    rlxd_init(rlx_var.rlxd_level,rlx_var.rlxd_seed+MPI_PID); /* use unique MPI_PID to shift seeds */
   }
 
 #ifdef GAUGE_SUN
   lprintf("MAIN",0,"Gauge group: SU(%d)\n",NG);
 #elif GAUGE_SON
   lprintf("MAIN",0,"Gauge group: SO(%d)\n",NG);
+#elif GAUGE_SPN
+  lprintf("MAIN",0,"Gauge group: SP(%d)\n",NG);
 #else
   lprintf("MAIN",0,"Default gauge group: SU(%d)\n",NG);
 #endif
@@ -338,6 +340,8 @@ int main(int argc,char *argv[]) {
   free(n_inv_iter);
   
   
+  /* finalize Monte Carlo */
+  end_mc();
   
   /* close communications */
   finalize_process();

@@ -129,9 +129,9 @@ void write_gauge_field_matrix_fullSPN(char filename[]){
                             if(four_fermion_active) {
                                 double * s_buff = (double*)cm;
                                 double *s = _FIELD_AT(ff_sigma, ix);
-                                double *pi = _FIELD_AT(ff_pi, ix);
+                                double *p = _FIELD_AT(ff_pi, ix);
                                 *(s_buff++)=*s;
-                                *(s_buff++)=*pi;
+                                *(s_buff++)=*p;
                                 cm = (suNgfull*) s_buff;
                             }
                         }
@@ -365,9 +365,9 @@ void read_gauge_field_matrix_fullSPN(char filename[]){
                             if(four_fermion_active) {
                                 double *s_buff = (double*)cm;
                                 double *s = _FIELD_AT(ff_sigma, ix);
-                                double *pi = _FIELD_AT(ff_pi, ix);
+                                double *p = _FIELD_AT(ff_pi, ix);
                                 *(s)=*(s_buff++);
-                                *(pi)=*(s_buff++);
+                                *(p)=*(s_buff++);
                                 cm = (suNgfull*) s_buff;
                             }
                         }

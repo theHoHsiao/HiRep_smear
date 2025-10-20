@@ -1,5 +1,4 @@
 /*******************************************************************************
-*  NOCOMPILE= !NG=2
 *
 * Check gauge covariance of the HYP smearing
 *
@@ -22,18 +21,17 @@
 #include "observables.h"
 #include "error.h"
 #include "utils.h"
-#include "setup.h"
 
 
 static void random_g(suNg_field* g) {
-  //   _DECLARE_INT_ITERATOR(ix);
+   _DECLARE_INT_ITERATOR(ix);
 
    _MASTER_FOR(g->type,ix)
       random_suNg(_FIELD_AT(g,ix));
 }
 
 static void transform_u(suNg_field* out, suNg_field* in, suNg_field* g) {
-  //_DECLARE_INT_ITERATOR(ix);
+   _DECLARE_INT_ITERATOR(ix);
    int iy,mu;
    suNg v;
 
@@ -62,12 +60,33 @@ extern int WL_max_nsteps;
 
 int main(int argc,char *argv[])
 {
-  int return_value = 0;
-
-  logger_map("DEBUG","debug");
   setup_process(&argc,&argv);
-  setup_gauge_fields();
+  
+  logger_setlevel(0,10000); /* log all */
+  if (PID!=0) { logger_disable(); }
+  logger_map("DEBUG","debug");
+  
+  lprintf("MAIN",0,"PId =  %d [world_size: %d]\n\n",PID,WORLD_SIZE); 
+  
+  read_input(glb_var.read,"test_input");
+  
+  /* setup communication geometry */
+  if (geometry_init() == 1) {
+    finalize_process();
+    return 0;
+  }
+  
+  geometry_mpi_eo();
+  /* setup random numbers */
+  read_input(rlx_var.read,"test_input");
 
+  lprintf("MAIN",0,"Gauge group: SU(%d)\n",NG);
+  lprintf("MAIN",0,"The lattice size is %dx%dx%dx%d\n",T,X,Y,Z);
+  lprintf("MAIN",0,"The lattice global size is %dx%dx%dx%d\n",GLB_T,GLB_X,GLB_Y,GLB_Z);
+  lprintf("MAIN",0,"The lattice borders are (%d,%d,%d,%d)\n",T_BORDER,X_BORDER,Y_BORDER,Z_BORDER);
+  lprintf("MAIN",0,"RLXD [%d,%d]\n",rlx_var.rlxd_level,rlx_var.rlxd_seed+MPI_PID);
+  rlxd_init(rlx_var.rlxd_level,rlx_var.rlxd_seed+MPI_PID); /* use unique MPI_PID to shift seeds */
+  
   suNg_field* u[5];
   u[0]=alloc_gfield(&glattice);
   u[1]=alloc_gfield(&glattice);
@@ -77,21 +96,25 @@ int main(int argc,char *argv[])
 
   suNg_field* g=alloc_gtransf(&glattice);
 
+  suNg* poly[2];
+  poly[0]=amalloc(sizeof(suNg)*X*Y*Z,ALIGN);
+  poly[1]=amalloc(sizeof(suNg)*X*Y*Z,ALIGN);
+  
   random_u(u[0]);
   start_gf_sendrecv(u[0]);
   complete_gf_sendrecv(u[0]);
-
+  
   random_g(g);
   start_gt_sendrecv(g);
   complete_gt_sendrecv(g);
-
+  
   double HYP_weight[3]={1.,1.,1.};
 
   transform_u(u[1],u[0],g);
   start_gf_sendrecv(u[1]);
   complete_gf_sendrecv(u[1]);
   HYP_smearing(u[2],u[1],HYP_weight);
-
+  
   HYP_smearing(u[3],u[0],HYP_weight);
   start_gf_sendrecv(u[3]);
   complete_gf_sendrecv(u[3]);
@@ -111,7 +134,7 @@ int main(int argc,char *argv[])
   }
 
 
-
+  
   lprintf("MAIN",0,"Checking gauge covariance of the HYP smearing\n");
   lprintf("MAIN",0,"\n");
 
@@ -127,7 +150,7 @@ int main(int argc,char *argv[])
     int mesglen;
     MPI_Error_string(mpiret,mesg,&mesglen);
     lprintf("MPI",0,"ERROR: %s\n",mesg);
-    error(1,1,"main [check_wilsonloops_7.c]","Cannot compute global maximum");
+    error(1,1,"main [check_wilsonloops_3.c]","Cannot compute global maximum");
   }
 #endif
 
@@ -135,15 +158,12 @@ int main(int argc,char *argv[])
   lprintf("MAIN",0,"(should be around 1*10^(-14) or so)\n");
   lprintf("MAIN",0,"\n");
   if(err<1.e-14)
-    lprintf("MAIN",0,"check_wilsonloops_7 ... OK\n");
+    lprintf("MAIN",0,"check_wilsonloops_6 ... OK\n");
   else
-  {
-    return_value +=1 ;
-    lprintf("MAIN",0,"check_wilsonloops_7 ... FAILED\n");
-  }
+    lprintf("MAIN",0,"check_wilsonloops_6 ... FAILED\n");
 
   WL_free();
-
+  
 
   free_gfield(u[0]);
   free_gfield(u[1]);
@@ -153,5 +173,5 @@ int main(int argc,char *argv[])
   free_gtransf(g);
 
   finalize_process();
-  return return_value;
+  exit(0);
 }

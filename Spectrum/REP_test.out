@@ -1,0 +1,60 @@
+[MAIN][0]Compiled with macros: -DBC_T_ANTIPERIODIC -DBC_X_PERIODIC -DBC_Y_PERIODIC -DBC_Z_PERIODIC -DUPDATE_EO -DIO_FLUSH -DREPR_ANTISYMMETRIC -DREPR_NAME=@REPR_ANTISYMMETRIC@ -DGAUGE_SPN
+[MAIN][0]PId =  0 [world_size: 1]
+[MAIN][0]
+[MAIN][0]input file [input_file_1]
+[MAIN][0]output file [REP_test.out]
+[MAIN][0]list file [list]
+[MAIN][0]RLXD [1,14831]
+[MAIN][0]Gauge group: SP(4)
+[MAIN][0]Fermion representation: REPR_ANTISYMMETRIC [dim=5]
+[GEOMETRY][0]Global size is 48x24x24x24
+[GEOMETRY][0]Proc grid is 1x1x1x1
+[GEOMETRY][0]Local size is 48x24x24x24
+[GEOMETRY][0]Extended local size is 48x24x24x24
+[GEOMETRY][0]Geometry variable checked
+[GEOMETRY][0]Gauge field: size 663552 nbuffer 0 
+[GEOMETRY][0]Spinor field (EO): size 663552 nbuffer 0 
+[GEOMETRY][0]Even Spinor field: size 331776 nbuffer 0 
+[GEOMETRY][0]Odd Spinor field: size 331776 nbuffer 0 
+[BCS][0]Gauge field: PERIODIC x PERIODIC PERIODIC PERIODIC
+[BCS][0]Fermion fields: ANTIPERIODIC x PERIODIC PERIODIC PERIODIC
+[MAIN][0]Inverter precision = 1.000000e-16
+[MAIN][0]Mass[0] = -0.710000
+[MAIN][0]Number of noisy sources per cnfg = 1. Does not affect point sources
+[MAIN][0]APE smearing activate on Gaussian smearing
+[MAIN][0]Smear source to several Ns_sink
+[MAIN][0]Measuring all 256 correlators 14
+[MAIN][0]Configuration from /Users/xiaopaul/Documents/Compositehiggs/Data/configs_48x24x24x24b7.7/run1_48x24x24x24nc4b7.700000n1000
+[IO][0]Configuration [/Users/xiaopaul/Documents/Compositehiggs/Data/configs_48x24x24x24b7.7/run1_48x24x24x24nc4b7.700000n1000] read [1 sec 290573 usec] Plaquette=6.090768e-01
+[TEST][0]<p> 0.609077
+[PLAQ][0]Plaq(1,0) = ( 0.608841 , 0.000000 )
+[PLAQ][0]Plaq(2,0) = ( 0.609217 , 0.000000 )
+[PLAQ][0]Plaq(2,1) = ( 0.609234 , 0.000000 )
+[PLAQ][0]Plaq(3,0) = ( 0.608890 , 0.000000 )
+[PLAQ][0]Plaq(3,1) = ( 0.609028 , 0.000000 )
+[PLAQ][0]Plaq(3,2) = ( 0.609251 , 0.000000 )
+[APE][0]APE smearing with val=0.400000 
+[APE][0]N=0 <p>_s = 0.609171
+[APE][0]N=50 <p>_s = 0.999034
+[FUND_POLYAKOV][0]Polyakov direction 0 = 0.00000000e+00 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 0 = -2.50000000e-01
+[FUND_POLYAKOV][0]Polyakov direction 1 = 8.32055327e-03 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 1 = 6.53932594e-03
+[FUND_POLYAKOV][0]Polyakov direction 2 = 1.27438538e-02 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 2 = 4.66181159e-03
+[FUND_POLYAKOV][0]Polyakov direction 3 = -3.17228194e-03 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 3 = 1.37064790e-04
+[PLAQ][0]Plaq(1,0) = ( 0.000000 , 0.000000 )
+[PLAQ][0]Plaq(2,0) = ( 0.000000 , 0.000000 )
+[PLAQ][0]Plaq(2,1) = ( 0.999037 , 0.000000 )
+[PLAQ][0]Plaq(3,0) = ( 0.000000 , 0.000000 )
+[PLAQ][0]Plaq(3,1) = ( 0.999030 , 0.000000 )
+[PLAQ][0]Plaq(3,2) = ( 0.999035 , 0.000000 )
+[APE][0]0.000000
+[APE][0]0.000000
+[APE][0]-0.000000
+[APE][0]APE smearing END 
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]source smearing epsilon = 0.140000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...21...22...23...24...25...26...27...28...29...30...31...32...33...34...35...36...37...38...39...40...41...42...43...44...45...46...47...48...49...50...51...52...53...54...55...56...57...58...59...60...
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.71

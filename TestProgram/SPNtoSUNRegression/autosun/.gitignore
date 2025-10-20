@@ -1,5 +1,4 @@
-spnalgmacros_*.cpp
-spnalgmacros_*
+spnalgmacros.cpp
+spnalgmacros
 spnalgtest
 writeREPR
-write_spn_sun_algconv

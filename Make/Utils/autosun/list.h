@@ -6,7 +6,6 @@
 #include <cstring>
 
 using namespace std;
-
 typedef long long int KEYTYPE;
 
 template<class INDEX, class VALUE> class orderedlist

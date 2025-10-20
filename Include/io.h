@@ -36,6 +36,7 @@ void read_gauge_field_matrix_fullSPN(char filename[]);
 void write_gauge_field_matrix_fullSPN(char filename[]);
 #endif
 
+
 void read_gauge_field_su2(char filename[]);
 void read_gauge_field_su2q(char filename[]);
 void write_gauge_field_su2q(char filename[]);

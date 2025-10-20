@@ -113,6 +113,9 @@ _DECLARE_ALLOC_FUNC(_name,_type,_size)
 
 _DECLARE_MEMORY_FUNC(spinor_field_f, spinor_field, 1);
 _DECLARE_MEMORY_FUNC(spinor_field_f_flt, spinor_field_flt, 1);
+/* PX: for Mix Rep. */
+_DECLARE_MEMORY_FUNC(spinor_field_f_fund, spinor_field_fund, 1);
+
 
 _DECLARE_MEMORY_FUNC(sfield, scalar_field, 1);
 

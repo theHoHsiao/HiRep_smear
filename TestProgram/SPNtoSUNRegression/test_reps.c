@@ -1,11 +1,8 @@
 #include "suN.h"
 #include "suN_types.h"
-#include "undefine.h"
-#include "undefine_vectors.h"
 #include "SP.h"
 #include "SP_types.h"
 
-#include "colors.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -21,7 +18,7 @@
 void print_SPg( SPg SPmatrix ){
   printf("\n");
   for( int i=0; i<NG*NG/2; i++ ){
-    printf("(%6.2f,%6.2f) ",creal(SPmatrix.c[i]),cimag(SPmatrix.c[i]));
+    printf("(%6.2f,%6.2f) ",SPmatrix.c[i].re,SPmatrix.c[i].im);
     if( (i+1)%NG == 0 ) printf("\n");
   }
   printf("\n");
@@ -31,7 +28,7 @@ void print_SPg( SPg SPmatrix ){
 void print_suNg( suNg suNmatrix ){
   printf("\n");
   for( int i=0; i<NG*NG; i++ ){
-    printf("(%6.2f,%6.2f) ",creal(suNmatrix.c[i]),cimag(suNmatrix.c[i]));
+    printf("(%6.2f,%6.2f) ",suNmatrix.c[i].re,suNmatrix.c[i].im);
     if( (i+1)%NG == 0 ) printf("\n");
   }
   printf("\n");
@@ -63,7 +60,7 @@ void print_suNf( suNf suNadj ){
 void print_SPf( SPf spNadj ){
   printf("\n");
   for( int i=0; i<SPNF*SPNF; i++ ){
-    printf("(%6.2f,%6.2f) ",creal(spNadj.c[i]),cimag(spNadj.c[i]));
+    printf("(%6.2f,%6.2f) ",spNadj.c[i].re,spNadj.c[i].im);
     if( (i+1)%SPNF == 0 ) printf("\n");
   }
   printf("\n");
@@ -72,7 +69,7 @@ void print_SPf( SPf spNadj ){
 void print_suNf( suNf suNadj ){
   printf("\n");
   for( int i=0; i<NF*NF; i++ ){
-    printf("(%6.2f,%6.2f) ",creal(suNadj.c[i]),cimag(suNadj.c[i]));
+    printf("(%6.2f,%6.2f) ",suNadj.c[i].re,suNadj.c[i].im);
     if( (i+1)%NF == 0 ) printf("\n");
   }
   printf("\n");
@@ -105,14 +102,16 @@ void compare_suNg_SPg( suNg suNmatrix, SPg SPmatrix ){
   
   double sum = 0;
   for(int i=0; i<NG*NG/2;i++){
-    double complex diff = suNmatrix.c[i] - SPmatrix.c[i];
-    sum += creal(diff*conj(diff));
+    double diff = suNmatrix.c[i].re - SPmatrix.c[i].re;
+    sum += diff*diff;
+    diff = suNmatrix.c[i].im - SPmatrix.c[i].im;
+    sum += diff*diff;
   }
 
   if( sum < 1e-14 ){
-    printf(BOLDGREEN "PASSED" RESET ", diff=%g\n",sum);
+    printf("PASSED, diff=%g\n\n",sum);
   } else {
-    printf(BOLDRED "TEST FAILED" RESET ", diff=%g\n",sum);
+    printf("TEST FAILED, diff=%g\n",sum);
     print_SPg(SPmatrix);
     print_suNg(suNmatrix);
     
@@ -133,28 +132,26 @@ void compare_represented( SPf spNadj, suNf suNadj){
     sum += diff*diff;
   }
   
-#elif defined(REPR_ANTISYMMETRIC)
-  SPf tmp;
-  _suntospn_asym(tmp.c,suNadj.c);
-  for(int i=0; i<SPNF*SPNF;i++){
-    double diff = tmp.c[i] - spNadj.c[i];
+#else
+
+#ifdef  REPR_FUNDAMENTAL  // using fundamental representation, fermion matrix is symplectic
+  for(int i=0; i<NF*NF/2;i++){
+#else 
+  for(int i=0; i<NF*NF;i++){
+#endif
+    double diff = suNadj.c[i].re - spNadj.c[i].re;
+    sum += diff*diff;
+    diff = suNadj.c[i].im - spNadj.c[i].im;
     sum += diff*diff;
   }
-
-#elif defined(REPR_FUNDAMENTAL)  // using fundamental representation, fermion matrix is symplectic
-  for(int i=0; i<NF*NF/2;i++){
-    double complex diff = suNadj.c[i] - spNadj.c[i];
-    sum += creal(diff*conj(diff));
-  }
-#else
-#error : REPR_SYMMETRIC not implemented.
+  
 #endif
 
   if( sum < 1e-14 ){
-    printf(BOLDGREEN "PASSED" RESET ", diff=%g\n",sum);
+    printf("PASSED, diff=%g\n\n",sum);
   } else {
-    printf(BOLDRED "TEST FAILED" RESET ", diff=%g\n",sum);
-#if defined(REPR_ADJOINT) || defined(REPR_ANTISYMMETRIC)
+    printf("TEST FAILED, diff=%g\n",sum);
+#ifdef REPR_ADJOINT
     print_SPf(tmp);
 #endif
     print_SPf(spNadj);
@@ -180,9 +177,9 @@ void compare_algebra( SPg_algebra_vector spNalg, suNg_algebra_vector suNalg){
   }
 
   if( sum < 1e-14 ){
-    printf(BOLDGREEN "PASSED" RESET ", diff=%g\n",sum);
+    printf("PASSED, diff=%g\n\n",sum);
   } else {
-    printf(BOLDRED "TEST FAILED" RESET ", diff=%g\n",sum);
+    printf("TEST FAILED, diff=%g\n",sum);
     print_spNalg(spNalg_repr);
     print_spNalg(spNalg);
     print_suNalg(suNalg);
@@ -199,7 +196,8 @@ SPg random_SPg(){
 
   /* First half of the rows */
   for( int i=0; i<NG*NG/2; i++ ){
-    SPmatrix.c[i] = random()*10./RAND_MAX + I* random()*10./RAND_MAX;
+    SPmatrix.c[i].re = random()*10./RAND_MAX;
+    SPmatrix.c[i].im = random()*10./RAND_MAX;
   }
   
   return SPmatrix;
@@ -213,7 +211,8 @@ void random_SPf(SPf_FMAT* fmatrix){
   }
 #else
   for( int i=0; i<SPNF*SPNF; i++ ){
-    fmatrix->c[i] = random()*10./RAND_MAX + I* random()*10./RAND_MAX;
+    fmatrix->c[i].re = random()*10./RAND_MAX;
+    fmatrix->c[i].im = random()*10./RAND_MAX;
   }
 #endif
 }
@@ -224,12 +223,15 @@ void random_SPf(SPf_FMAT* fmatrix){
 suNg SPg_to_suNg( SPg SPmatrix ){
   suNg suNmatrix;
   for( int i=0; i<NG*NG/2; i++ ){
-    suNmatrix.c[i] = SPmatrix.c[i];
+    suNmatrix.c[i].re = SPmatrix.c[i].re;
+    suNmatrix.c[i].im = SPmatrix.c[i].im;    
   }
     /* Second half is constructed out of the first half */
   for( int i=0; i<NG/2; i++ ) for( int j=0; j<NG/2; j++ ){
-    suNmatrix.c[NG*NG/2+NG*j+i] = -conj(SPmatrix.c[NG/2+NG*j+i]);
-    suNmatrix.c[NG*NG/2+NG*j+NG/2+i] =  conj(SPmatrix.c[NG*j+i]);
+    suNmatrix.c[NG*NG/2+NG*j+i].re = -SPmatrix.c[NG/2+NG*j+i].re;
+    suNmatrix.c[NG*NG/2+NG*j+i].im =  SPmatrix.c[NG/2+NG*j+i].im;
+    suNmatrix.c[NG*NG/2+NG*j+NG/2+i].re =  SPmatrix.c[NG*j+i].re;
+    suNmatrix.c[NG*NG/2+NG*j+NG/2+i].im = -SPmatrix.c[NG*j+i].im;
   }
   return suNmatrix;
 }
@@ -252,33 +254,32 @@ int main(void){
   SPg SPmatrix, SPresult;
   suNg_vector v1, v2, v3;
   
-  printf("Creating the matrices and testing similarity  ");
+  printf("Creating the matrices and testing similarity\n");
   SPmatrix = random_SPg();
   suNmatrix = SPg_to_suNg( SPmatrix );
   compare_suNg_SPg( suNmatrix, SPmatrix );
  
    
-  printf("Testing fund_algebra project  ");
+  printf("Testing fund_algebra project\n");
   SPg_algebra_vector spNalg;
   suNg_algebra_vector suNalg;
   _fund_algebra_project( suNalg, suNmatrix );
   _fund_spN_algebra_project( spNalg, SPmatrix );
   compare_algebra( spNalg, suNalg );
   
-  /* For this test we need to project a matrix in the symplectic adjoint
+  /* For this test we need to project an matrix in the symplectic adjoint
      into the suN adjoint. The same member of the group is not represented
      by the same matrix. */
-  printf("Testing algebra project  ");
+  printf("Testing algebra project\n");
   SPf_FMAT* sp_fermion_matrix = (SPf_FMAT*) malloc(sizeof(SPf_FMAT));
   suNf* su_fermion_matrix = (suNf*) malloc(sizeof(suNf));
   random_SPf(sp_fermion_matrix);
 #ifdef REPR_ADJOINT
   _spntosun_adj(su_fermion_matrix->c,sp_fermion_matrix->c);
-#elif defined(REPR_ANTISYMMETRIC)
-  _spntosun_asym(su_fermion_matrix->c,sp_fermion_matrix->c);
 #else
   for(int i=0;i<NF*NF;++i){
-    su_fermion_matrix->c[i] = sp_fermion_matrix->c[i];
+    su_fermion_matrix->c[i].re = sp_fermion_matrix->c[i].re;
+    su_fermion_matrix->c[i].im = sp_fermion_matrix->c[i].im;
   }
 #endif
   _algebra_project( suNalg, *su_fermion_matrix );
@@ -286,24 +287,24 @@ int main(void){
   compare_algebra( spNalg, suNalg );
   
   
-  printf("Testing group represent  ");
+  printf("Testing group represent\n");
   SPf* sp_comp_matrix = (SPf*) malloc(sizeof(SPf));
   _group_represent( *su_fermion_matrix, suNmatrix );
   _spN_group_represent( *sp_comp_matrix, SPmatrix );
   compare_represented( *sp_comp_matrix, *su_fermion_matrix );
   
-  printf("Testing algebra represent  ");
+  printf("Testing algebra represent\n");
   _spntosun_algebra(suNalg.c,spNalg.c);
   _algebra_represent( *su_fermion_matrix, suNalg );
   _spN_algebra_represent( *sp_comp_matrix, spNalg);
   compare_represented( *sp_comp_matrix, *su_fermion_matrix );
   
-  printf("Testing fundamental algebra represent  ");
+  printf("Testing fundamental algebra represent\n");
   _fund_algebra_represent( suNmatrix, suNalg );
   _fund_spN_algebra_represent( SPmatrix, spNalg);
   compare_suNg_SPg( suNmatrix, SPmatrix );
   
-  printf("Testing ExpX - only at second order  ");
+  printf("Testing ExpX - only at second order\n");
   ExpX( 2.0e-4, &suNalg, &suNmatrix );
   SP_ExpX( 2.0e-4, &spNalg, &SPmatrix);
   compare_suNg_SPg( suNmatrix, SPmatrix );

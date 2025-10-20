@@ -40,6 +40,13 @@ static int MINRES_core(short int *valid, MINRES_par *par, spinor_operator M, spi
   _TWO_SPINORS_MATCHING(in,out);
   if(trial!=NULL) {_TWO_SPINORS_MATCHING(in,trial);}
 
+  /*
+    printf("numero vettori n=%d\n",par->n);
+    for (i=0; i<(par->n); ++i) {
+    printf("shift[%d]=%f\n",i,par->shift[i]);
+    printf("out[%d]=%p\n",i,out[i]);      
+    }
+  */
    
   /* allocate spinors fields and aux real variables */
   /* implementation note: to minimize the number of malloc calls
@@ -179,16 +186,173 @@ int MINRES(MINRES_par *par, spinor_operator M, spinor_field *in, spinor_field *o
   return iter;
 }
 
+static int MINRES_core_fund(short int *valid, MINRES_par *par, spinor_operator_fund M, spinor_field_fund *in, spinor_field_fund *out, spinor_field_fund *trial){
+
+  spinor_field_fund *q1,*q2;
+  spinor_field_fund *p1, *p2, *Mp;
+  spinor_field_fund *sptmp, *memall;
+
+  double alpha, beta, oldbeta, innorm2;
+  double r, s1, s2, c1, c2, rho1, rho2, rp;
+  double d, h, k;
+
+  int cgiter;
+  unsigned short notconverged;
+
+  /* fare qualche check sugli input */
+  _TWO_SPINORS_MATCHING(in,out);
+  if(trial!=NULL) {_TWO_SPINORS_MATCHING(in,trial);}
+
+  /*
+    printf("numero vettori n=%d\n",par->n);
+    for (i=0; i<(par->n); ++i) {
+    printf("shift[%d]=%f\n",i,par->shift[i]);
+    printf("out[%d]=%p\n",i,out[i]);
+    }
+  */
+   
+  /* allocate spinors fields and aux real variables */
+  /* implementation note: to minimize the number of malloc calls
+   * objects of the same type are allocated together
+   */
+
+  memall = alloc_spinor_field_f_fund(5,in->type);
+  q1=memall;
+  q2= q1+1;
+  p1 = q2+1;
+  p2 = p1+1;
+  Mp = p2+1;
+
+  /* init recursion */
+  cgiter = 0;
+  notconverged=1;
+
+  spinor_field_copy_f_fund(p2, in);
+  if(trial!=NULL) {
+    M(p1,trial);
+    ++cgiter;
+    spinor_field_sub_assign_f_fund(p2,p1);
+    if(out!=trial){
+      spinor_field_copy_f_fund(out,trial);
+    }
+    
+  } else {
+    spinor_field_zero_f_fund(out);
+  }
+
+  innorm2=spinor_field_sqnorm_f_fund(in);
+  beta=sqrt(spinor_field_sqnorm_f_fund(p2));
+  spinor_field_mul_f_fund(p2,1./beta,p2);
+  spinor_field_zero_f_fund(p1);
+  r=rho2=beta;
+  rho1=1.;
+  c2=-1.;
+  rp=s1=s2=c1=0.;
+  spinor_field_zero_f_fund(q1);
+  spinor_field_zero_f_fund(q2);
+
+  /* cg recursion */
+  do {
+    ++cgiter;
+
+    M(Mp,p2);
+    
+    /* compute alpha */
+    alpha = spinor_field_prod_re_f_fund(Mp,p2);
+
+    /* update p1, p2 */
+    spinor_field_mul_add_assign_f_fund(Mp,-beta,p1);
+    spinor_field_mul_add_assign_f_fund(Mp,-alpha,p2);
+    sptmp=p1;
+    p1=p2;
+    p2=Mp;
+    Mp=sptmp;
+
+    /* update beta */
+    oldbeta=beta;
+    beta=sqrt(spinor_field_sqnorm_f_fund(p2));
+    
+    /* normalize p2 */
+    spinor_field_mul_f_fund(p2,1./beta,p2);
+
+
+    d=(alpha-rp*c1)*s2;
+    h=oldbeta*s1;
+    rp=-oldbeta*c1*s2-alpha*c2;
+    k=sqrt(rp*rp+beta*beta);
+    c1=c2;
+    c2=rp/k;
+    s1=s2;
+    s2=beta/k;
+
+    spinor_field_lc_f_fund(Mp,-h/rho1,q1,-d/rho2,q2);
+    sptmp=q1;
+    q1=q2;
+    q2=sptmp; /* swap q1[i]<->q2[i] */
+    spinor_field_add_f_fund(q2,p1,Mp);
+    
+    /* update rho */
+    rho1=rho2;
+    rho2=k;
+    
+    /* update solution */
+    spinor_field_mul_add_assign_f_fund(out,r*c2/k,q2);
+    
+    /* update residuum */
+    r*=s2;
+
+    if((r*r)<par->err2*innorm2){
+      notconverged=0;
+    }
+        /* just for debug
+        else {
+      lprintf("INVERTER",30,"MINRES iter %d res: %1.8e\n",cgiter,(r*r)/innorm2);
+    }
+        */
+    
+    
+  } while ((par->max_iter==0 || cgiter<par->max_iter) && notconverged);
+
+  /* test results */
+  M(Mp,out);
+  ++cgiter;
+  spinor_field_sub_f_fund(Mp,Mp,in);
+  innorm2=spinor_field_sqnorm_f_fund(Mp)/innorm2;
+  *valid=1;
+  if (fabs(innorm2)>par->err2) {
+    *valid=0;
+    lprintf("INVERTER",30,"MINRES failed: err2 = %1.8e > %1.8e\n",innorm2,par->err2);
+  } else {
+    lprintf("INVERTER",20,"MINRES inversion: err2 = %1.8e < %1.8e\n",innorm2,par->err2);
+  }
+   
+  /* free memory */
+  free_spinor_field_f_fund(memall);
+
+  /* return number of cg iter */
+  return cgiter;
+}
+
+int MINRES_fund(MINRES_par *par, spinor_operator_fund M, spinor_field_fund *in, spinor_field_fund *out, spinor_field_fund *trial){
+  int iter,rep=0;
+  short int valid;
+
+  iter=MINRES_core_fund(&valid, par, M, in, out, trial);
+  while(!valid && (par->max_iter==0 || iter<par->max_iter)) {
+    iter+=MINRES_core_fund(&valid, par, M, in, out, out);
+    if((++rep)%5==0)
+      lprintf("INVERTER",-10,"MINRES recursion = %d (precision too high?)\n",rep);
+  }
+
+  lprintf("INVERTER",10,"MINRES: MVM = %d\n",iter);
+
+  return iter;
+}
 
 
 static double spinor_field_prod_re_f_f2d(spinor_field_flt *s1, spinor_field_flt *s2)
 {
-    static double res;
-    _OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
-
+  double res=0.;
   
   _TWO_SPINORS_FOR_SUM(s1,s2,res) {
     float prod;
@@ -203,11 +367,7 @@ static double spinor_field_prod_re_f_f2d(spinor_field_flt *s1, spinor_field_flt 
 
 static double spinor_field_sqnorm_f_f2d(spinor_field_flt *s1)
 {
-    static double res;
-    _OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
+  double res=0.; 
    
   _ONE_SPINOR_FOR_SUM(s1,res) {
     float prod;

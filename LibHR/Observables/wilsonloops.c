@@ -23,13 +23,6 @@
 #warning This code does not work with the open BCs
 #endif
 
-#if defined(WITH_MPI) && !defined(NDEBUG)
-#define MPIRET(type) type =
-#else 
-#define MPIRET(type)
-#endif /* WITH_MPI */
-
-
 //#error "Wilson loop must be fixed, The zerocoord global location must be added"
 
 #define _WL_4VOL_INDEX(t,x,y,z) ((t)+(x)*T+(y)*T*X+(z)*T*X*Y)
@@ -256,7 +249,7 @@ void WL_load_path(int c[3], int nsteps) {
 void WL_Hamiltonian_gauge(suNg_field* out, suNg_field* in) {
   int i,j;
   int x,y,z;
-#if defined(WITH_MPI) && !defined(NDEBUG)
+#ifdef WITH_MPI  
   int mpiret;
 #endif /* WITH_MPI */
 
@@ -277,7 +270,7 @@ void WL_Hamiltonian_gauge(suNg_field* out, suNg_field* in) {
 #ifdef WITH_MPI  
   if(COORD[0]!=0) {
     MPI_Status status;
-    MPIRET(mpiret) MPI_Recv((double * )(buf_gtf[1]), /* buffer */
+    mpiret=MPI_Recv(buf_gtf[1], /* buffer */
         (X*Y*Z)*sizeof(suNg)/sizeof(double), /* lenght in units of doubles */
         MPI_DOUBLE, /* basic datatype */
         proc_dn(CID,0), /* cid of origin */
@@ -321,7 +314,7 @@ void WL_Hamiltonian_gauge(suNg_field* out, suNg_field* in) {
   
 #ifdef WITH_MPI  
   if(COORD[0]!=NP_T-1) {
-    MPIRET(mpiret) MPI_Send((double * )(buf_gtf[0]), /* buffer */
+    mpiret=MPI_Send(buf_gtf[0], /* buffer */
         (X*Y*Z)*sizeof(suNg)/sizeof(double), /* lenght in units of doubles */
         MPI_DOUBLE, /* basic datatype */
         proc_up(CID,0), /* cid of destination */
@@ -396,15 +389,13 @@ void WL_broadcast_polyakov(suNg* poly, suNg_field* gf) {
   }
 
 #ifdef WITH_MPI
-#ifndef NDEBUG
   int mpiret;
-#endif /* WITH_MPI */
   if(COORD[0]==NP_T-1) {
     MPI_Request comm_req[NP_T-1];
     int destCID=CID;
     for(int t=0; t<NP_T-1; t++) {
       destCID=proc_up(destCID,0);
-      MPIRET(mpiret) MPI_Isend((double * )(poly), /* buffer */
+      mpiret=MPI_Isend(poly, /* buffer */
           (X*Y*Z)*sizeof(suNg)/sizeof(double), /* lenght in units of doubles */
           MPI_DOUBLE, /* basic datatype */
           destCID, /* cid of destination */
@@ -424,7 +415,7 @@ void WL_broadcast_polyakov(suNg* poly, suNg_field* gf) {
     }
     
     MPI_Status status[NP_T-1];
-    MPIRET(mpiret) MPI_Waitall(NP_T-1, comm_req, status);
+    mpiret=MPI_Waitall(NP_T-1, comm_req, status);
 #ifndef NDEBUG
     if (mpiret != MPI_SUCCESS) {
       char mesg[MPI_MAX_ERROR_STRING];
@@ -449,7 +440,7 @@ void WL_broadcast_polyakov(suNg* poly, suNg_field* gf) {
 
     int sCOORD[4], sCID;
     sCOORD[0]=NP_T-1;sCOORD[1]=COORD[1];sCOORD[2]=COORD[2];sCOORD[3]=COORD[3];
-    MPIRET(mpiret) MPI_Cart_rank(cart_comm, sCOORD, &sCID);
+    mpiret=MPI_Cart_rank(cart_comm, sCOORD, &sCID);
 #ifndef NDEBUG
     if (mpiret != MPI_SUCCESS) {
       char mesg[MPI_MAX_ERROR_STRING];
@@ -460,7 +451,7 @@ void WL_broadcast_polyakov(suNg* poly, suNg_field* gf) {
     }
 #endif /* NDEBUG */
     MPI_Status status;
-    MPIRET(mpiret) MPI_Recv((double * )(poly), /* buffer */
+    mpiret=MPI_Recv(poly, /* buffer */
         (X*Y*Z)*sizeof(suNg)/sizeof(double), /* lenght in units of doubles */
         MPI_DOUBLE, /* basic datatype */
         sCID, /* cid of destination */
@@ -548,9 +539,7 @@ void WL_correlators(double** ret, const suNg_field* gf, const suNg* poly, const 
 #ifdef WITH_MPI
     MPI_Request comm_req[2];
     MPI_Status status[2];
-#ifndef NDEBUG
-  int mpiret;
-#endif /* WITH_MPI */
+    int mpiret;
     int destCID=CID;
     int sendCID=CID;
 #endif /* WITH_MPI */
@@ -561,7 +550,7 @@ void WL_correlators(double** ret, const suNg_field* gf, const suNg* poly, const 
       /* start communication for DT */
       if(DT<NP_T) {
         destCID=proc_dn(destCID,0);
-        MPIRET(mpiret) MPI_Isend((double * )(buf_gtf[0]), /* buffer */
+        mpiret=MPI_Isend(buf_gtf[0], /* buffer */
             (T*X*Y*Z)*sizeof(suNg)/sizeof(double), /* lenght in units of doubles */
             MPI_DOUBLE, /* basic datatype */
             destCID, /* cid of destination */
@@ -580,7 +569,7 @@ void WL_correlators(double** ret, const suNg_field* gf, const suNg* poly, const 
 #endif /* NDEBUG */
   
         sendCID=proc_up(sendCID,0);
-        MPIRET(mpiret) MPI_Irecv((double * )(buf_gtf[2]), /* buffer */
+        mpiret=MPI_Irecv(buf_gtf[2], /* buffer */
             (T*X*Y*Z)*sizeof(suNg)/sizeof(double), /* lenght in units of doubles */
             MPI_DOUBLE, /* basic datatype */
             sendCID, /* cid of origin */
@@ -628,7 +617,7 @@ void WL_correlators(double** ret, const suNg_field* gf, const suNg* poly, const 
 #ifdef WITH_MPI
       /* wait for communication for DT */
       if(DT<NP_T) {
-        MPIRET(mpiret) MPI_Waitall(2, comm_req, status);
+        mpiret=MPI_Waitall(2, comm_req, status);
 
 #ifndef NDEBUG
         if (mpiret != MPI_SUCCESS) {
@@ -660,8 +649,8 @@ void WL_correlators(double** ret, const suNg_field* gf, const suNg* poly, const 
 }
 
 
+
 void WL_wilsonloops(double HYP_weight[3]) {
-#if NG==2
   error(WL_npaths==0,1,"WL_wilsonloops [wilsonloops.c]","No path has been loaded");
   
   HYP_smearing(HYP,u_gauge,HYP_weight);
@@ -726,8 +715,5 @@ void WL_wilsonloops(double HYP_weight[3]) {
   afree(tmp);
   afree(WL[0]);
   afree(WL);
-#else
-lprintf("WILSON LOOPS",0,"Wilson Loops measure has been implmented only for NG=2\n");
-#endif //NG==2
-
 }
+

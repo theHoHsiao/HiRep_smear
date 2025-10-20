@@ -223,12 +223,7 @@ double ModeNumber(double M2) {
   M2star = M2/star;
   
   for(int i=0; i<nhits; i++) {
-    create_z2_volume_source(&eta[0]);
-    _OMP_PRAGMA(master)
-      {
-        start_sf_sendrecv(&eta[0]);
-        complete_sf_sendrecv(&eta[0]);
-      }
+    z2_spinor_field(&eta[0]);
     
     operatorH(&eta[1], &eta[0], M2star);
     operatorH(&eta[0], &eta[1], M2star);

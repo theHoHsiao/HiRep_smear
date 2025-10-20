@@ -7,11 +7,12 @@
 #define INVERTERS_H
 
 #include "suN_types.h"
-#include "hr_complex.h"
+#include "complex.h"
 #include "spinor_field.h"
 
 
 typedef void (*spinor_operator)(spinor_field *out, spinor_field *in);
+typedef void (*spinor_operator_fund)(spinor_field_fund *out, spinor_field_fund *in);/*JW*/
 typedef void (*spinor_operator_flt)(spinor_field_flt *out, spinor_field_flt *in);
 typedef void (*spinor_operator_m)(spinor_field *out, spinor_field *in, double m);
 
@@ -38,7 +39,7 @@ void SAP_prec(int nu, inverter_ptr inv, mshift_par *par, spinor_operator M, spin
 int cg_mshift(mshift_par *par, spinor_operator M, spinor_field *in, spinor_field *out);
 int cg_mshift_def(mshift_par *par, spinor_operator M, spinor_operator P, spinor_operator_m Pinv, spinor_field *in, spinor_field *out);
 int cg_mshift_flt(mshift_par *par, spinor_operator M, spinor_operator_flt F, spinor_field *in, spinor_field *out);
-
+int cg_mshift_fund(mshift_par *par, spinor_operator_fund M, spinor_field_fund *in, spinor_field_fund *out);
 
 typedef struct {
   double err2; /* maximum error on the solutions */
@@ -48,6 +49,7 @@ typedef struct {
 } g5QMR_fltacc_par;
 
 int g5QMR_mshift(mshift_par *par, spinor_operator M, spinor_field *in, spinor_field *out);
+int g5QMR_mshift_fund(mshift_par *par, spinor_operator_fund M, spinor_field_fund *in, spinor_field_fund *out);/*JW*/
 int g5QMR_mshift_trunc(mshift_par *par, int trunc_iter, spinor_operator M, spinor_field *in, spinor_field *out_trunc, spinor_field *out);
 int g5QMR_fltacc(g5QMR_fltacc_par *par, spinor_operator M, spinor_operator_flt M_flt, spinor_field *in, spinor_field *out);
 
@@ -68,9 +70,11 @@ int HBiCGstab_mshift(mshift_par *par, spinor_operator M, spinor_field *in, spino
 
 
 int MINRES_mshift(mshift_par *par, spinor_operator M, spinor_field *in, spinor_field *out);
+int MINRES_mshift_fund(mshift_par *par, spinor_operator_fund M, spinor_field_fund *in, spinor_field_fund *out);
 
 int MINRES(MINRES_par *par, spinor_operator M, spinor_field *in, spinor_field *out, spinor_field *trial);
 int MINRES_flt(MINRES_par *par, spinor_operator_flt M, spinor_field_flt *in, spinor_field_flt *out, spinor_field_flt *trial);
+int MINRES_fund(MINRES_par *par, spinor_operator_fund M, spinor_field_fund *in, spinor_field_fund *out, spinor_field_fund *trial);/*JW*/
 
 int eva(int nev,int nevt,int init,int kmax,
                int imax,double ubnd,double omega1,double omega2,
@@ -82,7 +86,7 @@ int eva_tuned(int nev,int nevt,int init,int kmax,
                spinor_field *ev,double d[],int *status);
 
 void jacobi1(int n,double a[],double d[],double v[]);
-void jacobi2(int n,double complex a[],double d[],double complex v[]);
+void jacobi2(int n,complex a[],double d[],complex v[]);
 
 
 

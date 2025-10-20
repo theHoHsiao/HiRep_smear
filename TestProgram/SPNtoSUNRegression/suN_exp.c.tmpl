@@ -30,13 +30,17 @@ static void YtoU(double* u, double *y)
 *  U = s[0] + i*s.sigma/4
 *  al vettore (v1,v2)
 */
-static void su2_rotate(double *s,double complex *v1,double complex *v2)
+static void su2_rotate(double *s,complex *v1,complex *v2)
 {
-   double complex z1, z2;
-   z1= s[0]*creal(*v1)-s[1]*cimag(*v2)+s[2]*creal(*v2)-s[3]*cimag(*v1) +
-      I*(s[0]*cimag(*v1)+s[1]*creal(*v2)+s[2]*cimag(*v2)+s[3]*creal(*v1));
-   z2 = s[0]*creal(*v2)-s[1]*cimag(*v1)-s[2]*creal(*v1)+s[3]*cimag(*v2) +
-      I*(s[0]*cimag(*v2)+s[1]*creal(*v1)-s[2]*cimag(*v1)-s[3]*creal(*v2));
+   complex z1, z2;
+   z1.re=
+      s[0]*(*v1).re-s[1]*(*v2).im+s[2]*(*v2).re-s[3]*(*v1).im;
+   z1.im=
+      s[0]*(*v1).im+s[1]*(*v2).re+s[2]*(*v2).im+s[3]*(*v1).re;
+   z2.re=
+      s[0]*(*v2).re-s[1]*(*v1).im-s[2]*(*v1).re+s[3]*(*v2).im;
+   z2.im=
+      s[0]*(*v2).im+s[1]*(*v1).re-s[2]*(*v1).im-s[3]*(*v2).re;
    (*v1)=z1;
    (*v2)=z2;
 }

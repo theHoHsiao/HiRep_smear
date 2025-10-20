@@ -1,7 +1,4 @@
 #!/bin/bash
-LOCKFILE=cinfo.lock
-[ -f "$LOCKFILE" ] && exit 0
-> ${LOCKFILE}
 
 FILENAME=cinfo.c
 MKDIR=$1
@@ -11,11 +8,11 @@ PWD=`pwd`
 shift; shift
 MACROS=$@
 
-> ${FILENAME}
+echo "// created automatically by $0 on $(date)" > ${FILENAME}
 
 
 echo -n ${MACROS} | tr '"' '@' > cinfo.tmp
-len=`cat cinfo.tmp | wc -c`+1
+len=$((`cat cinfo.tmp | wc -c`+1))
 echo -n "static char MACROS[${len}] = \"" >> ${FILENAME}
 cat cinfo.tmp >> ${FILENAME}
 echo "\";" >> ${FILENAME}
@@ -23,7 +20,7 @@ echo "" >> ${FILENAME}
 rm cinfo.tmp
 
 awk '{printf "%s\\n",$0}' ${MKDIR}/MkFlags > cinfo.tmp
-len=`cat cinfo.tmp | wc -c`+1
+len=$((`cat cinfo.tmp | wc -c`+1))
 echo -n "static char CI_mkflags[${len}] = \"" >> ${FILENAME}
 cat cinfo.tmp >> ${FILENAME}
 echo "\";" >> ${FILENAME}
@@ -36,7 +33,7 @@ then
 else
  echo -n "No CPU info\n" > cinfo.tmp
 fi
-len=`cat cinfo.tmp | wc -c`+1
+len=$((`cat cinfo.tmp | wc -c`+1))
 echo -n "static char CI_cpuinfo[${len}] = \"" >> ${FILENAME}
 cat cinfo.tmp >> ${FILENAME}
 echo "\";" >> ${FILENAME}
@@ -64,23 +61,35 @@ echo "\";" >> ${FILENAME}
 echo "" >> ${FILENAME}
 rm cinfo.tmp
 
-if [ -x "`command -v git`" ]
-then
-    len=`git rev-parse --symbolic-full-name|wc -c`+1
-    echo -n "static char CI_gitinfo[${len}] = \"" `git rev-parse --symbolic-full-name` "\";" >>${FILENAME}
-    echo "" >> ${FILENAME}
-    
-    len=`git log --format="%H" -n 1|wc -c`+1
-    echo "static char CI_gitrevision[${len}] = \"" `git log --format="%H" -n 1` "\";" >>${FILENAME}
-    echo "" >> ${FILENAME}
-else
-    echo -n "static char CI_gitinfo[1] = \"\";" >> ${FILENAME}
-    echo "" >> ${FILENAME}
+#svn --version >&- ; ret=$?
+#if [ "${ret}" -eq "0" ] ; then
+#  svn info ${TOPDIR} | awk '{printf "%s\\n",$0}' > cinfo.tmp
+#  len=`cat cinfo.tmp | wc -c`+1
+#  echo -n "static char CI_svninfo[${len}] = \"" >> ${FILENAME}
+#  cat cinfo.tmp >> ${FILENAME}
+#  echo "\";" >> ${FILENAME}
+#  echo "" >> ${FILENAME}
+#  rm cinfo.tmp
 
-    echo "static char CI_gitrevision[11] = \""No version"\";" >>${FILENAME}
-    echo "" >> ${FILENAME}
-fi
+#  svn st -q ${TOPDIR} | awk '{printf "%s\\n",$0}' > cinfo.tmp
+#  len=`cat cinfo.tmp | wc -c`+1
+#  echo -n "static char CI_svnstatus[${len}] = \"" >> ${FILENAME}
+#  cat cinfo.tmp >> ${FILENAME}
+#  echo "\";" >> ${FILENAME}
+#  echo "" >> ${FILENAME}
+#  rm cinfo.tmp
+#else
+  echo -n "static char CI_svninfo[1] = \"\";" >> ${FILENAME}
+  echo "" >> ${FILENAME}
+  echo -n "static char CI_svnstatus[1] = \"\";" >> ${FILENAME}
+  echo "" >> ${FILENAME}
+#fi
+
+#REV=$(svn info | grep Revision | awk '{ print $2 }')
+#if [ -z "$REV" ]; then
+  REV="0"
+#fi
+echo "static int CI_svnrevision = ${REV};" >> ${FILENAME}
+echo "" >> ${FILENAME}
 
 cat ${MKDIR}/Utils/${FILENAME}.tmpl >> ${FILENAME}
-
-rm -f ${LOCKFILE}

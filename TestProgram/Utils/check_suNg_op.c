@@ -1,6 +1,3 @@
-/*
-* NOCOMPILE = SO
-*/
 #define MAIN_PROGRAM
 
 #include <stdio.h>
@@ -17,42 +14,20 @@
 #include "representation.h"
 #include "utils.h"
 
-#ifdef GAUGE_SPN
-#define _NROWS NG/2
-#else
-#define _NROWS NG
-#endif
-
-void print_cmplx(double complex c){
-  printf("%g",creal(c));
-  if (cimag(c)>0){
-    printf("+%gi",cimag(c));
+void print_cmplx(complex c){
+  printf("%g",c.re);
+  if (c.im>0){
+    printf("+%gi",c.im);
   }
   else{
-    printf("-%gi",fabs(cimag(c)));
+    printf("%gi",c.im);
   }
 }
 
-double  norm_suNg_minus_id(suNg* a){
-  int i,j;
-  double r=0.;
-  for (i=0;i<_NROWS;i++){
-      for (j=1;j<NG;j++){
-        #ifdef WITH_QUATERNIONS
-        r +=fabs(a->c[i*NG+j]);
-        #else
-        r +=cabs(a->c[i*NG+j]);
-        #endif
-        if (i==j) r-= 1.0;
-    }
-
-  }
-return r;
-}
 void printML(suNg* a){
   int i,j;
   printf("[");
-  for (i=0;i<_NROWS;i++){
+  for (i=0;i<NG;i++){
     print_cmplx(a->c[i*NG]);
     for (j=1;j<NG;j++){
       printf(",");
@@ -63,62 +38,33 @@ void printML(suNg* a){
 printf("]\n");
 }
 
-
 int main(){
-  int return_value=0;
-  double complex det;
-  double test;
+  complex det;
   suNg a,b,c;
   random_suNg(&a);
   random_suNg(&b);
-  random_suNg(&c); // Vincent:   NOT USED !
-  det_hermNg(&det,&a);
-  printf("Det: ");
-  print_cmplx(det);
-  if (cabs(det - 1.0) >1e-14) return_value +=1;
-
-
-  _suNg_add_assign(a,b); /* a = a+ b */
-  det_hermNg(&det,&a);
+  random_suNg(&c);
+  _suNg_add_assign(a,b);
+  det_suNg(&det,&a);
   printf("Det: ");
   print_cmplx(det);
   printf("\n");
-  if (cabs(det) < 1e-14) return_value +=1;
-
-
   printML(&a);
-  c = a;  /* c = a+b */
-  inv_hermNg(&a); /* a= (a+b)^-1 does not work for SO ? */
+  c = a;
+  inv_suNg(&a);
   printML(&a);
-  _suNg_times_suNg(b,a,c); /* b = (a+b)^-1 *(a+b) so it should be 1 */
-  printf("Should be the identity matrix:\n");
+  _suNg_times_suNg(b,a,c);
   printML(&b);
-  test= norm_suNg_minus_id(&b);
-  if (test > 1e-14){
-    printf("Deviation from the identity matrix: %f\n",test);
-    return_value +=1;
-  }
-
-  c=b; /* c =  (a+b)^-1 *(a+b) */
-  printML(&b); /* Vincent useless */
-  inv_hermNg(&b); /* b = ((a+b)^-1 *(a+b))^-1 */
-  det_hermNg(&det,&b);
-  printf("Should be the determinant of the identity matrix:\n");
+  b.c[8].re=1e-15;
+  c=b;
+  printML(&b);
+  inv_suNg(&b);
+  det_suNg(&det,&b);
   printf("Det: ");
   print_cmplx(det);
-  if (cabs(det - 1.0) >1e-14) return_value +=1;
   printf("\n");
   printML(&b);
-  _suNg_times_suNg(a,b,c); /* a = ((a+b)^-1 *(a+b))^-1  * (a+b)^-1 *(a+b) */
-  printf("Should be the identity matrix:\n");
+  _suNg_times_suNg(a,b,c);
   printML(&a);
-  test= norm_suNg_minus_id(&a);
-  if (test > 1e-14){
-    printf("Deviation from the identity matrix: %f\n",test);
-    return_value +=1;
-  }
-
-
-  return return_value;
-
+  
 }

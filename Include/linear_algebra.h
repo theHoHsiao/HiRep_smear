@@ -20,7 +20,7 @@
 #define _SPINOR_FIELD_TYPE spinor_field
 #define _FUNC(a) a##_f
 #define _REAL double
-#define _COMPLEX double complex
+#define _COMPLEX complex
 #include "TMPL/linear_algebra.h.sdtmpl"
 #undef _SPINOR_FIELD_TYPE
 #undef _FUNC
@@ -31,7 +31,18 @@
 #define _SPINOR_FIELD_TYPE spinor_field_flt
 #define _FUNC(a) a##_f_flt
 #define _REAL float
-#define _COMPLEX float complex
+#define _COMPLEX complex_flt
+#include "TMPL/linear_algebra.h.sdtmpl"
+#undef _SPINOR_FIELD_TYPE
+#undef _FUNC
+#undef _REAL
+#undef _COMPLEX
+
+/* double precision for fundamental representation (JW)*/
+#define _SPINOR_FIELD_TYPE spinor_field_fund
+#define _FUNC(a) a##_f_fund
+#define _REAL double
+#define _COMPLEX complex
 #include "TMPL/linear_algebra.h.sdtmpl"
 #undef _SPINOR_FIELD_TYPE
 #undef _FUNC

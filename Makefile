@@ -1,11 +1,10 @@
 TOPDIR = .
-SUBDIRS := $(shell find * -maxdepth 0 -type d | grep -v SpNMerge)
+SUBDIRS := $(shell find * -maxdepth 0 -type d)
 
 #Exclude these directories
-EXCLUDEDIR := Analysis Doc Fortran HiRep.xcodeproj Run TestProgramUtils
+EXCLUDEDIR := Analysis Doc Fortran HiRep.xcodeproj
 SUBDIRS := $(filter-out $(EXCLUDEDIR), $(SUBDIRS))
 
 MKDIR = $(TOPDIR)/Make
 include $(MKDIR)/MkRules
-
 

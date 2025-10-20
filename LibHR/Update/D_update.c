@@ -23,14 +23,14 @@ void set_twisted_mass(double mu){
 
 /* this is the basic operator used in the update */
 void Hoo(spinor_field *out, spinor_field *in){
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	Cphi_diag(static_mass, out, in);
 	spinor_field_g5_assign_f(out);
 #endif
 }
 
 void Hoo2(spinor_field *out, spinor_field *in){
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	Cphi_diag(static_mass, out, in);
 	spinor_field_g5_assign_f(out);
 	Cphi_diag(static_mass, out, out);
@@ -40,13 +40,13 @@ void Hoo2(spinor_field *out, spinor_field *in){
 
 void H2(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	g5Cphi_eopre_sq(static_mass, out, in);
 #else
 	g5Dphi_eopre_sq(static_mass, out, in);
 #endif
 #else
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	g5Cphi_sq(static_mass, out, in);
 #else
 	g5Dphi_sq(static_mass, out, in);
@@ -56,13 +56,13 @@ void H2(spinor_field *out, spinor_field *in){
 
 void H(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	g5Cphi_eopre(static_mass, out, in);
 #else
 	g5Dphi_eopre(static_mass, out, in);
 #endif
 #else
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	g5Cphi(static_mass, out, in);
 #else
 	g5Dphi(static_mass, out, in);
@@ -80,13 +80,13 @@ void H_flt(spinor_field_flt *out, spinor_field_flt *in){
 
 void D(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	Cphi_eopre(static_mass, out, in);
 #else
 	Dphi_eopre(static_mass, out, in);
 #endif
 #else
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	Cphi(static_mass, out, in);
 #else
 	Dphi(static_mass, out, in);
@@ -108,8 +108,8 @@ void Qtm_p(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
     Qhat_eopre(static_mass, static_mu,out, in);
 #else
-  double complex imu;
-  imu=I*static_mu;
+  complex imu;
+  imu.re=0;imu.im=static_mu;
   g5Dphi(static_mass, out, in);
   spinor_field_mulc_add_assign_f(out,imu,in);
 #endif
@@ -119,8 +119,8 @@ void Qtm_m(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
     Qhat_eopre(static_mass, -static_mu,out, in);
 #else
-  double complex imu;
-  imu=-I*static_mu;
+  complex imu;
+  imu.re=0;imu.im=-static_mu;
   g5Dphi(static_mass, out, in);
   spinor_field_mulc_add_assign_f(out,imu,in);
 #endif
@@ -138,18 +138,18 @@ void QpQm_tm(spinor_field *out, spinor_field *in){
 
 void Qtm_p_alt(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
-  double complex imu;
-  imu=I*static_mu; 	
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+	complex imu;
+	imu.re=0;imu.im=static_mu;
+#ifdef WITH_CLOVER
 	g5Cphi_eopre(static_mass,out,in);
 #else
 	g5Dphi_eopre(static_mass,out,in);
 #endif
 	spinor_field_mulc_add_assign_f(out,imu,in);
 #else
-	double complex imu;
-	imu=I*static_mu;
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+	complex imu;
+	imu.re=0;imu.im=static_mu;
+#ifdef WITH_CLOVER
 	g5Cphi(static_mass,out,in);
 #else
 	g5Dphi(static_mass, out, in);
@@ -160,18 +160,18 @@ void Qtm_p_alt(spinor_field *out, spinor_field *in){
 
 void Qtm_m_alt(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
-	double complex imu;
-	imu=-I*static_mu;
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+	complex imu;
+	imu.re=0;imu.im=-static_mu;
+#ifdef WITH_CLOVER
 	g5Cphi_eopre(static_mass,out,in);
 #else
 	g5Dphi_eopre(static_mass,out, in);
 #endif
 	spinor_field_mulc_add_assign_f(out,imu,in);
 #else
-	double complex imu;
-	imu=-I*static_mu;
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+	complex imu;
+	imu.re=0;imu.im=-static_mu;
+#ifdef WITH_CLOVER
 	g5Cphi(static_mass,out,in);
 #else
 	g5Dphi(static_mass, out, in);
@@ -182,14 +182,14 @@ void Qtm_m_alt(spinor_field *out, spinor_field *in){
 
 void QpQm_tm_alt(spinor_field *out, spinor_field *in){
 #ifdef UPDATE_EO
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	g5Cphi_eopre_sq(static_mass,out,in);
 #else
 	g5Dphi_eopre_sq(static_mass, out, in);
 #endif
 	spinor_field_mul_add_assign_f(out,static_mu*static_mu,in);
 #else
-#if defined(WITH_CLOVER) || defined(WITH_EXPCLOVER)
+#ifdef WITH_CLOVER
 	g5Cphi_sq(static_mass,out,in);
 #else
 	g5Dphi_sq(static_mass, out, in);

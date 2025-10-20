@@ -23,7 +23,7 @@
 #define _SPINOR_TYPE suNf_spinor
 #define _FUNC(a) a##_f
 #define _REAL double
-#define _COMPLEX double complex
+#define _COMPLEX complex
 
 #include "TMPL/linear_algebra.c.sdtmpl"
 void _FUNC(spinor_field_copy)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2) {
@@ -44,7 +44,7 @@ void _FUNC(spinor_field_copy)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2) {
 #define _SPINOR_TYPE suNf_spinor_flt
 #define _FUNC(a) a##_f_flt
 #define _REAL float
-#define _COMPLEX float complex
+#define _COMPLEX complex_flt
 
 #include "TMPL/linear_algebra.c.sdtmpl"
 void _FUNC(spinor_field_copy)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2) {
@@ -58,4 +58,22 @@ void _FUNC(spinor_field_copy)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2) {
 #undef _REAL
 #undef _COMPLEX
 
+/* double precision for fundamental representation (JW)*/
 
+#define _SPINOR_FIELD_TYPE spinor_field_fund
+#define _SPINOR_TYPE suNg_spinor
+#define _FUNC(a) a##_f_fund
+#define _REAL double
+#define _COMPLEX complex
+
+#include "TMPL/linear_algebra_fund.c.sdtmpl"
+void _FUNC(spinor_field_copy)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2) {
+    _TWO_SPINORS_MATCHING(s1,s2);
+    memcpy(s1->ptr,s2->ptr,s1->type->gsize_spinor*sizeof(suNg_spinor));
+}
+
+#undef _SPINOR_FIELD_TYPE
+#undef _SPINOR_TYPE
+#undef _FUNC
+#undef _REAL
+#undef _COMPLEX

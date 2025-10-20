@@ -1,10 +1,5 @@
 /*******************************************************************************
 *
-* NOCOMPILE= !NG=3
-* NOCOMPILE= !REPR_ANTISYMMETRIC
-* NOCOMPILE= GAUGE_SPN
-* NOCOMPILE= WITH_MPI
-*
 * Test of modules
 *
 *******************************************************************************/
@@ -15,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 #include "io.h"
 #include "random.h"
 #include "error.h"
@@ -26,84 +22,71 @@
 #include "representation.h"
 #include "utils.h"
 #include "update.h"
-#include "setup.h"
-#include "logger.h"
 
-#if (NG != 3)
-#error : check_algebra_2 only works for SU(3)
+#if  !defined(REPR_ANTISYMMETRIC) || ! defined(GAUGE_SUN) || (NG!=3)
+#error: check_algebra_2 only works for 2AS representation and SU(3)
 #endif
 
-#ifndef REPR_ANTISYMMETRIC
-#error : check_algebra_2 only works for 2AS representation
-#endif
 
 #ifdef WITH_MPI
-#error : check_algebra_2 only works only on serial jobs
+#error: check_algebra_2 only works only on serial jobs
 #endif
 
-int main(int argc, char *argv[])
+static int error_compare(double x, double y){
+    const double threshold = 1.0e-13;
+    return (x < y - threshold) || (x > y + threshold);
+}
+int main(int argc,char *argv[])
 {
+   suNg A;
+   suNf a,s,tmp;
+   int i,j;
+   complex zp,zm;
+   
+   printf("Gauge group: SU(%d)\n",NG);
+   printf("Fermion representation: dim = %d\n",NF);
+   printf("Check 2AS = fund* for SU(3)\n");
+   printf("\n");
 
-  int return_value = 0;
-  double test_val;
-  /* setup process id and communications */
-  logger_map("DEBUG", "debug");
+   random_suNg(&A);
+   _group_represent2(&a,&A);
 
-  setup_process(&argc, &argv);
+   _complex_1(zp);
+   _complex_mulr(zm,-1.0,zp);
 
-  setup_gauge_fields();
+   _suNf_zero(s);
+   (s).c[2]=zp;
+   (s).c[4]=zm;
+   (s).c[6]=zp;
+   _suNf_times_suNf(tmp,a,s);
+   _suNf_times_suNf(a,s,tmp);
 
-  suNg A;
-  suNf a, s, tmp;
-  int i, j;
-  double complex zp, zm;
+   printf("fundamental representation:\n");
+   for (i=0;i<NF;i++)
+   {
+      for (j=0;j<NF;j++)
+      {
+         printf("%.4f + i %.4f   ",A.c[i*NF+j].re,A.c[i*NF+j].im);
+      }
+      printf("\n");
+   }
+   
+   printf("2AS representation:\n");
+   for (i=0;i<NF;i++)
+   {
+      for (j=0;j<NF;j++)
+      {
+         printf("%.4f + i %.4f   ",a.c[i*NF+j].re,a.c[i*NF+j].im);
+      }
+      printf("\n");
+   }
+   
+   for (i=0;i<NF;i++)
+      for (j=0;j<NF;j++)
+      {
+         assert(error_compare(a.c[i*NF+j].re,A.c[i*NF+j].re)==0);
+         assert(error_compare(-a.c[i*NF+j].im,A.c[i*NF+j].im)==0);
+      }
 
-  lprintf("MAIN", 0, "Gauge group: SU(%d)\n", NG);
-  lprintf("MAIN", 0, "Fermion representation: dim = %d\n", NF);
-  lprintf("MAIN", 0, "Check 2AS = fund* for SU(3)\n");
-  lprintf("MAIN", 0, "\n");
-
-  random_suNg(&A);
-  _group_represent2(&a, &A);
-
-  _complex_1(zp);
-  _complex_mulr(zm, -1.0, zp);
-
-  _suNf_zero(s);
-  (s).c[2] = zp;
-  (s).c[4] = zm;
-  (s).c[6] = zp;
-  _suNf_times_suNf(tmp, a, s);
-  _suNf_times_suNf(a, s, tmp);
-
-  lprintf("MAIN", 0, "fundamental representation:\n");
-  for (i = 0; i < NF; i++)
-  {
-    for (j = 0; j < NF; j++)
-    {
-      lprintf("MAIN", 0, "%.4e + i %.4e   ", creal(A.c[i * NF + j]), cimag(A.c[i * NF + j]));
-    }
-    lprintf("MAIN", 0, "\n");
-  }
-
-  lprintf("MAIN", 0, "2AS representation:\n");
-  for (i = 0; i < NF; i++)
-  {
-    for (j = 0; j < NF; j++)
-    {
-      lprintf("MAIN", 0, "%.4e + i %.4e   ", creal(a.c[i * NF + j]), cimag(a.c[i * NF + j]));
-    }
-    lprintf("MAIN", 0, "\n");
-  }
-
-  for (i = 0; i < NF * NF; i++)
-    A.c[i] -= conj(a.c[i]);
-
-  _suNg_sqnorm(test_val, A);
-
-  if (sqrt(test_val) > 10.e-14)
-    return_value = 1;
-
-  finalize_process();
-  return return_value;
+   exit(0);
 }

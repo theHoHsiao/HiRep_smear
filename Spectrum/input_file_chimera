@@ -1,0 +1,65 @@
+GLB_T = 4
+GLB_X = 4
+GLB_Y = 4
+GLB_Z = 4
+NP_T = 1
+NP_X = 1
+NP_Y = 1
+NP_Z = 1
+
+N_REP = 1
+
+rlx_level = 1
+rlx_seed = 14831
+rlx_start = new
+rlx_state = rand_state
+
+mes:masses = -0.8
+mes:use_input_mass = 0
+
+mes:precision = 1e-18
+mes:nhits_2pt = 1
+mes:nhits_disc = 0
+
+// Measure smeared meson spectrum
+mes:meas_mixed = 0
+mes:def_point_fund = 0
+mes:def_point_anti = 0
+
+mes:smearing_fund = 1
+mes:smearing_anti = 1
+
+mes:source_t = 0
+mes:source_x = 0
+mes:source_y = 0
+mes:source_z = 0
+
+mes:smear_e_source_fund = 0.2
+mes:smear_e_sink_fund = 0.2
+mes:smear_e_source_anti = 0.1
+mes:smear_e_sink_anti = 0.1
+mes:smear_N_source = 20
+mes:smear_N_sink = 0
+
+//APE smearing activate if APE_N != 0
+mes:APE_epsilon = 0.4
+mes:APE_N = 50
+
+mes:chimera_smear = 1
+mes:mass_fund = -0.5 ;-0.1;-0.2;-0.3;-0.4;-0.5;-0.6
+mes:mass_anti = -0.8 ;-0.7
+
+ff:on = false
+//Parameters for hopping parameter expansion, 0 in degree_hopping to disable
+mes:degree_hopping = 0
+mes:nhits_hopping = 5
+
+mes:background_field = 1
+mes:Q =  0.5
+mes:nEz = 1
+
+// clover csw
+mes:csw = 1.9192
+
+mes:rho_s = 0.15
+mes:rho_t = 0.15

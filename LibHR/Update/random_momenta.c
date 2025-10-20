@@ -20,7 +20,6 @@ void gaussian_momenta(suNg_av_field *momenta) {
   
   const double c3=1./sqrt(_FUND_NORM2);
   const int ngen=sizeof(suNg_algebra_vector)/sizeof(double); 
-  
 
 
   

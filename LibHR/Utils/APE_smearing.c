@@ -36,14 +36,15 @@ void APE_smearing(double smear_val, int Nsmear){
     int mu, nu, mid, midpmu, midpnu, midmnu, midpmumnu;
     suNg v, vout, vtmp;
     
-    double sm1 = 1. - smear_val;  // ( 1 - \alpha )
-    double sm2 = smear_val / 6. ; // ( \alpha \ 6 )
+    double sm1 = 1. - smear_val;
+    double sm2 = smear_val / 6. ;
     
     suNg_field *u_gauge_tmp = alloc_gfield(&glattice);
     u_gauge_APE = alloc_gfield(&glattice);
     
     #ifdef ALLOCATE_REPR_GAUGE_FIELD
     u_gauge_APE_f=alloc_gfield_f(&glattice);
+    u_gauge_APE_f_fund=alloc_gfield_f_fund(&glattice);
     #endif
     
     for (it=0;it<T; it++){
@@ -60,7 +61,7 @@ void APE_smearing(double smear_val, int Nsmear){
     represent_gauge_field_APE();
     
     lprintf("APE",0,"APE smearing with val=%f \n", smear_val);
-    lprintf("APE",0,"N=0 <p>_s = %1.6f\n",avr_spatial_plaquette_APE());
+    lprintf("APE",0,"N=0 <p>_s = %1.6f\n",avr_spacial_plaquette_APE());
     
     for (int N=0; N<Nsmear; N++){
         
@@ -98,7 +99,7 @@ void APE_smearing(double smear_val, int Nsmear){
                     _suNg_add_assign(vout,tr2);
                     
                     _suNg_mul(vtmp, 1., vout);
-                    project_to_suNg(&vout); // Project to the group manifold
+                    project_to_suNg(&vout);
                     
                     #ifdef GAUGE_SPN
                     cooling_SPN(&v, &vout, &vtmp, 5); // max Re Tr(U V^+)
@@ -127,9 +128,10 @@ void APE_smearing(double smear_val, int Nsmear){
         represent_gauge_field_APE();
         
     }
-    lprintf("APE",0,"N=%d <p>_s = %1.6f\n", Nsmear, avr_spatial_plaquette_APE());
+    lprintf("APE",0,"N=%d <p>_s = %1.6f\n", Nsmear, avr_spacial_plaquette_APE());
     polyakov_APE();
     full_plaquette_APE();
+    
     lprintf("APE",0,"APE smearing END \n");
     free_gfield(u_gauge_tmp);
 }

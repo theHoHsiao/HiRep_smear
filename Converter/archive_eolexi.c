@@ -199,22 +199,24 @@ void read_gauge_field_eolexi_BE(char filename[])
     for(mu=0;mu<4;mu++) {
       lprintf("IO",20,"x=(0,0,0,0) mu=%d pu_gauge =\n",mu);
 #ifdef GAUGE_SPN
-#define _NGLIMIT NG/2
-#else 
-#define _NGLIMIT NG
+      for(i=0; i<NG/2; i++) {
+#else
+      for(i=0; i<NG; i++) {
 #endif
-      for(i=0; i<_NGLIMIT; i++) {
-#undef _NGLIMIT
         lprintf("IO",20,"[ ");
         for(j=0; j<NG; j++){
 #ifdef GAUGE_SON
           lprintf("IO",20,"(%.2f) ",pu_gauge(ix,mu)->c[i*NG+j]);
 #else
-          lprintf("IO",20,"(%.2f , %.2f) ",creal(pu_gauge(ix,mu)->c[i*NG+j]),cimag(pu_gauge(ix,mu)->c[i*NG+j]));
+          lprintf("IO",20,"(%.2f , %.2f) ",pu_gauge(ix,mu)->c[i*NG+j].re,pu_gauge(ix,mu)->c[i*NG+j].im);
 #endif //GAUGE_SON
 	}
         lprintf("IO",20,"]\n");
+#ifdef GAUGE_SPN // useless, only for parenthesis match
       }
+#else
+      }
+#endif
     }
     free(eolexi_field);
   }
@@ -385,22 +387,24 @@ void read_gauge_field_eolexi_LE(char filename[])
     for(mu=0;mu<4;mu++) {
       lprintf("IO",20,"x=(0,0,0,0) mu=%d pu_gauge =\n",mu);
 #ifdef GAUGE_SPN
-#define _NGLIMIT NG/2
+      for(i=0; i<NG/2; i++) {
 #else
-#define _NGLIMIT NG
+      for(i=0; i<NG; i++) {
 #endif
-      for(i=0; i<_NGLIMIT; i++) {
-#undef _NGLIMIT
         lprintf("IO",20,"[ ");
         for(j=0; j<NG; j++){
 #ifdef GAUGE_SON
           lprintf("IO",20,"(%.2f) ",pu_gauge(ix,mu)->c[i*NG+j]);
 #else
-          lprintf("IO",20,"(%.2f , %.2f) ",creal(pu_gauge(ix,mu)->c[i*NG+j]),cimag(pu_gauge(ix,mu)->c[i*NG+j]));
+          lprintf("IO",20,"(%.2f , %.2f) ",pu_gauge(ix,mu)->c[i*NG+j].re,pu_gauge(ix,mu)->c[i*NG+j].im);
 #endif //GAUGE_SON
 	}
         lprintf("IO",20,"]\n");
+#ifdef GAUGE_SPN // useless, only for parenthesis match
       }
+#else
+      }
+#endif
     }
     free(eolexi_field);
   }

@@ -8,11 +8,7 @@
 /* Re <s1,s2> */
 double _FUNC(spinor_field_prod_re)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2)
 {
-    static double res;
-_OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
+	double res=0.;
 
 	_TWO_SPINORS_FOR_SUM(s1,s2,res) {
     _REAL prod;
@@ -28,11 +24,7 @@ _OMP_PRAGMA ( single )
 /* Im <s1,s2> */
 double _FUNC(spinor_field_prod_im)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2)
 {
-	static double res;
-_OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
+   double res=0.;
    
    _TWO_SPINORS_FOR_SUM(s1,s2,res) {
      _REAL prod;
@@ -46,20 +38,19 @@ _OMP_PRAGMA ( single )
 }
 
 /* <s1,s2> */
-double complex _FUNC(spinor_field_prod)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2)
+complex _FUNC(spinor_field_prod)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2)
 {
-
-    static double complex res;
-_OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
+  complex res;
+  //OMP SUM cannot be done on complex (structures)
+  //so we need to use 2 doubles
+  double rre=0., rim=0.;
   
-  _TWO_SPINORS_FOR_SUM(s1,s2,res) {
+  _TWO_SPINORS_FOR_SUM(s1,s2,rre,rim) {
     _COMPLEX loc_res; //needed for OMP threads
     _spinor_prod_f(loc_res,*_SPINOR_PTR(s1),*_SPINOR_PTR(s2));
-    res+=(double complex) loc_res;
+    rre+=(double)loc_res.re; rim+=(double)loc_res.im; //This is needed for OMP
   }
+  res.re=rre; res.im=rim; //This is needed for OMP
 #ifdef WITH_MPI
 	global_sum((double*)&res,2);
 #endif
@@ -69,11 +60,7 @@ _OMP_PRAGMA ( single )
 /* Re <g5*s1,s2> */
 double _FUNC(spinor_field_g5_prod_re)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2)
 {
-    static double res;
-_OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
+   double res=0.;
 
    _TWO_SPINORS_FOR_SUM(s1,s2,res) {
      _REAL prod;
@@ -89,11 +76,7 @@ _OMP_PRAGMA ( single )
 /* Im <g5*s1,s2> */
 double _FUNC(spinor_field_g5_prod_im)(_SPINOR_FIELD_TYPE *s1, _SPINOR_FIELD_TYPE *s2)
 {
-    static double res;
-_OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
+   double res=0.;
 
    _TWO_SPINORS_FOR_SUM(s1,s2,res) {
      _REAL prod;
@@ -109,11 +92,7 @@ _OMP_PRAGMA ( single )
 /* Re <s1,s1> */
 double _FUNC(spinor_field_sqnorm)(_SPINOR_FIELD_TYPE *s1)
 {
-    static double res;
-_OMP_PRAGMA ( single )
-    {
-      res = 0.;
-    }
+   double res=0.;
 
    _ONE_SPINOR_FOR_SUM(s1,res) {
      _REAL prod;
@@ -121,13 +100,8 @@ _OMP_PRAGMA ( single )
      res+=(double)prod;
    }
 #ifdef WITH_MPI
-_OMP_PRAGMA ( master )
-{
 	global_sum(&res,1);
-}
-_OMP_BARRIER
 #endif
-
    return res;
 }
 

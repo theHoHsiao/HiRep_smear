@@ -72,14 +72,13 @@ typedef struct _input_rlx {
 {"ranlux start", "rlx_start = %s", STRING_T, &(varname).rlxd_start},\
 {NULL, NULL, INT_T, NULL}				    \
 },\
-.rlxd_state="",\
-.rlxd_level=0\
+.rlxd_state=""\
 }
 
 /* Logger global variables */
 typedef struct _input_logger {
 /* Logger level defined globally */
-/* They are defined at input level */
+/* They are defined at imput level */
 /* If you need to separate the log level for a channel insert it here */
 
   int def_log_lvl;

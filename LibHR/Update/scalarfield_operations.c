@@ -78,7 +78,9 @@ void spinor_scalarfield_ig5_mult_add_assign(spinor_field *out,scalar_field *pi, 
   _MASTER_FOR(in->type,i) {
      suNf_spinor s,r;
      double k = *_FIELD_AT(pi,i);
-     double complex z=I*k;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = k; 
      s = *_FIELD_AT(in,i);
      r = *_FIELD_AT(out,i);
      _spinor_g5_assign_f(s);
@@ -92,7 +94,9 @@ void spinor_scalarfield_mig5_mult_add_assign(spinor_field *out,scalar_field *pi,
   _MASTER_FOR(in->type,i) {
      suNf_spinor s,r;
      double k = *_FIELD_AT(pi,i);
-     double complex z=-I*k;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = -k; 
      s = *_FIELD_AT(in,i);
      r = *_FIELD_AT(out,i);
      _spinor_g5_assign_f(s);
@@ -111,8 +115,9 @@ void spinor_sigma_pi_rho_minus_div_assign(spinor_field *out,scalar_field *sigma,
      s = *_FIELD_AT(in,i);
      _spinor_mul_f(r,-tm*tsq,s);
      _spinor_g5_f(g5s,s);
-     double complex z;
-     z = I*tp*tsq;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = tp*tsq;
      _spinor_mulc_add_assign_f(r,z,g5s);
      //if(i==8000) printf("div sigma: %g  %g\n",tm,tp);
      *_FIELD_AT(out,i) = r;
@@ -128,8 +133,9 @@ void spinor_sigma_pi_rho_div_assign(spinor_field *out,scalar_field *sigma,scalar
      s = *_FIELD_AT(in,i);
      _spinor_mul_f(r,tm*tsq,s);
      _spinor_g5_f(g5s,s);
-     double complex z;
-     z = -I*tp*tsq;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = -tp*tsq;
      _spinor_mulc_add_assign_f(r,z,g5s);
      //if(i==8000) printf("div sigma: %g  %g\n",tm,tp);
      *_FIELD_AT(out,i) = r;
@@ -145,8 +151,9 @@ void spinor_sigma_pi_dagger_rho_div_assign(spinor_field *out,scalar_field *sigma
      s = *_FIELD_AT(in,i);
      _spinor_mul_f(r,tm*tsq,s);
      _spinor_g5_f(g5s,s);
-     double complex z;
-     z = I*tp*tsq;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = tp*tsq;
      _spinor_mulc_add_assign_f(r,z,g5s);
      //if(i==8000) printf("div sigma: %g  %g\n",tm,tp);
      *_FIELD_AT(out,i) = r;
@@ -161,8 +168,9 @@ void spinor_sigma_pi_dagger_rho_assign(spinor_field *out,scalar_field *sigma,sca
      s = *_FIELD_AT(in,i);
      _spinor_mul_f(r,tm,s);
      _spinor_g5_f(g5s,s);
-     double complex z;
-     z = I*tp;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = tp;
      _spinor_mulc_add_assign_f(r,z,g5s);
      //if(i==8000) printf("div sigma: %g  %g\n",tm,tp);
      *_FIELD_AT(out,i) = r;
@@ -200,8 +208,9 @@ void spinor_scalarfield_ig5_mult_add_assign_flt(spinor_field_flt *out,scalar_fie
   _MASTER_FOR(in->type,i) {
      suNf_spinor_flt s,r;
      double k = *_FIELD_AT(pi,i);
-     double complex z;
-     z = I*k; 
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = k; 
      s = *_FIELD_AT(in,i);
      r = *_FIELD_AT(out,i);
      _spinor_g5_assign_f(s);
@@ -215,8 +224,9 @@ void spinor_scalarfield_mig5_mult_add_assign_flt(spinor_field_flt *out,scalar_fi
   _MASTER_FOR(in->type,i) {
      suNf_spinor_flt s,r;
      double k = *_FIELD_AT(pi,i);
-     double complex z;
-     z = -I*k; 
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = -k; 
      s = *_FIELD_AT(in,i);
      r = *_FIELD_AT(out,i);
      _spinor_g5_assign_f(s);
@@ -237,8 +247,9 @@ void spinor_sigma_pi_rho_div_assign_flt(spinor_field_flt *out,scalar_field *sigm
      s = *_FIELD_AT(in,i);
      _spinor_mul_f(r,tm*tsq,s);
      _spinor_g5_f(g5s,s);
-     double complex z;
-     z = -I*tp*tsq;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = -tp*tsq;
      _spinor_mulc_add_assign_f(r,z,g5s);
      //if(i==8000) printf("div sigma: %g  %g\n",tm,tp);
      *_FIELD_AT(out,i) = r;
@@ -254,8 +265,9 @@ void spinor_sigma_pi_dagger_rho_div_assign_flt(spinor_field_flt *out,scalar_fiel
      s = *_FIELD_AT(in,i);
      _spinor_mul_f(r,tm*tsq,s);
      _spinor_g5_f(g5s,s);
-     double complex z;
-     z = I*tp*tsq;
+     complex z;
+     _complex_re(z) = 0;
+     _complex_im(z) = tp*tsq;
      _spinor_mulc_add_assign_f(r,z,g5s);
      //if(i==8000) printf("div sigma: %g  %g\n",tm,tp);
      *_FIELD_AT(out,i) = r;

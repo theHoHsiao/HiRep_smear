@@ -39,5 +39,8 @@ void start_gf_sendrecv_flt(suNg_field_flt *gf);
 void complete_sf_sendrecv_flt(spinor_field_flt *gf);
 void start_sf_sendrecv_flt(spinor_field_flt *gf);
 
+/* Fundamental rep sendrecv JW*/
+void complete_sf_sendrecv_fund(spinor_field_fund *gf);
+void start_sf_sendrecv_fund(spinor_field_fund *gf);
 
 #endif /* COMMUNICATIONS_H */

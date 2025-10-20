@@ -260,8 +260,8 @@ int logger_reset() {
 int logger_map(char *name, char *filename) {
 	static int init=1;
 	char openmode='w';
-	FILE *newfd;
-	record *rd;
+	FILE *newfd = NULL;
+	record *rd = NULL;
 
 	if(name==0)
 		return 1;
@@ -391,9 +391,9 @@ void logger_rmlevel(char *name){
 }
 
 int logger_stdout(char *filename) {
-	FILE *fd;
+	FILE *fd = NULL;
 	char openmode='w';
-	record *rd;
+	record *rd = NULL;
 
 	mapchanged=1; /* assume we are about to change the map */
 
@@ -482,7 +482,7 @@ int lprintf(char *name, int level, char *format, ...) {
 	static record *lastrec=0;
 	static char lastname[512]={0};
 	static FILE *lastfd=0;
-	static char buf[4096]; 
+	static char buf[1024]; 
 	static char alevel[16];
 	char *cur=&buf[0];
 	int ret;

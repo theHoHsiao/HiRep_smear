@@ -376,7 +376,7 @@ string ExpX(const char* dtname,  const char* hname, const char* uname)
     assert(k == -1);
 
     RET <<
-        "\n\tfor (int i=0; i<NG*NG/2; ++i) { r->c[i]=ut.c[i]; }\n";
+        "\n\tfor (int i=0; i<NG*NG/2; ++i) { r->c[i].re=ut.c[i].re; r->c[i].im=ut.c[i].im; }\n";
     return RET.str();
 }
 #elif defined(_GAUGE_SPN_)
@@ -416,7 +416,8 @@ string ExpX(const char* dtname,  const char* hname, const char* uname)
 #ifdef _GAUGE_SON_
     RET <<
         "\tsuNgc ut, *u;\n\n"
-        "\tfor (int i=0; i<NG*NG; ++i) { creal(ut.c[i]=r->c[i]; cimag(ut.c[i])=0.; }\n"
+        "\tfor (int i=0; i<NG*NG; ++i) { ut.c[i].re=r->c[i]; ut.c[i].im=0.; }\n"
+        "\tfor (int i=0; i<NG*NG; ++i) { ut.c[i].re=r->c[i]; ut.c[i].im=0.; }\n"
         "\tu=&ut;\n\n";
 #elif defined(_GAUGE_SPN_) // to compare with the SUN version of ExpX
     RET <<
@@ -424,7 +425,7 @@ string ExpX(const char* dtname,  const char* hname, const char* uname)
         "\t_suNg_expand(ut,*r);\n"
         "\tu=&ut;\n\n";
 #endif
-    
+	
     int k = 0;
     for(int j = 1; j < group::N; j++)
         for(int i = 0; i < j; i++)
@@ -458,10 +459,10 @@ string ExpX(const char* dtname,  const char* hname, const char* uname)
             k--;
         }
 #ifdef _GAUGE_SON_
-    RET<<"\n\tfor (int i=0; i<NG*NG; ++i) { r->c[i]=creal(ut.c[i]); }\n";
+    RET<<"\n\tfor (int i=0; i<NG*NG; ++i) { r->c[i]=ut.c[i].re; }\n";
 #elif defined(_GAUGE_SPN_) // to compare with the SUN version of ExpX
     RET <<
-        "\n\tfor (int i=0; i<NG*NG/2; ++i) { r->c[i]=ut.c[i]; }\n";
+        "\n\tfor (int i=0; i<NG*NG/2; ++i) { r->c[i].re=ut.c[i].re; r->c[i].im=ut.c[i].im; }\n";
 #endif
  
     return RET.str();

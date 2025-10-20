@@ -11,14 +11,13 @@
 #include <math.h>
 
 #if (NG!=$N$) 
-#error : Mismatch between NG and ExpX_legacy!
+#error : Mismatch between NG and ExpX!
 #endif
 
 /*
 *  U = (1+i*y.sigma/4)(1-i*y.sigma/4)^{-1}
 *  U = u[0] + i*u.sigma/4
 */
-#ifndef WITH_QUATERNIONS
 static void YtoU(double* u, double *y)
 {
    double y2 = y[0]*y[0] + y[1]*y[1] +y[2]*y[2];
@@ -31,39 +30,57 @@ static void YtoU(double* u, double *y)
 
 
 /*
-*  Applies the SU(2) rotation defined by 
+*  Applica la rotazione di SU(2) definita da
 *  U = s[0] + i*s.sigma/4
-*  to the (v1,v2) vector
+*  al vettore (v1,v2)
 */
-static void su2_rotate(double *s,double complex *v1,double complex *v2)
-{      
-   double complex z1, z2;
-  z1=s[0]*(*v1)+I*s[1]*(*v2)+s[2]*(*v2)+I*s[3]*(*v1);
-  z2=s[0]*(*v2)+I*s[1]*(*v1)-s[2]*(*v1)-I*s[3]*(*v2);
+static void su2_rotate(double *s,complex *v1,complex *v2)
+{
+   complex z1, z2;
+   z1.re=
+      s[0]*(*v1).re-s[1]*(*v2).im+s[2]*(*v2).re-s[3]*(*v1).im;
+   z1.im=
+      s[0]*(*v1).im+s[1]*(*v2).re+s[2]*(*v2).im+s[3]*(*v1).re;
+   z2.re=
+      s[0]*(*v2).re-s[1]*(*v1).im-s[2]*(*v1).re+s[3]*(*v2).im;
+   z2.im=
+      s[0]*(*v2).im+s[1]*(*v1).re-s[2]*(*v1).im-s[3]*(*v2).re;
    (*v1)=z1;
    (*v2)=z2;
 }
-#endif
+
+static inline void ExpX_taylor( double dt, suNg_algebra_vector *h, suNg *r){
+    suNg ufinal, addendum,dtiT;
+    _suNg_unit(ufinal);// u = 1
+    suNg iT;
+    _fund_algebra_represent(iT,*h);
+    _suNg_mul(dtiT,dt,iT); 
+    addendum = dtiT; // for order = 1
+    _suNg_add_assign(ufinal,addendum);// u = 1+ dt*iT
+    for(int order = 2; order != 10;++order){
+        suNg tmp;
+        // addendum[order] = 1.0/order * dtiT * addendum[order-1]
+        _suNg_times_suNg(tmp,dtiT,addendum);
+        _suNg_mul(addendum,1.0/order,tmp); 
+        _suNg_add_assign(ufinal,addendum);// u += (dt*iT)^order/order!
+    } 
+    suNg result;
+    _suNg_times_suNg(result,ufinal,*r);
+    *r = result;
+}
+
 
 /*
-*  Approximate 
+*  Approssima
 *  V = exp(sum(A) iT(A)*h(A)*dt)
-*  with a unitary matrix according to the alghorithm defined in Appendix A 
-*  of https://arxiv.org/pdf/hep-lat/0409106.pdf
-*  and replaces  V.U -> U
+*  con una matrice unitaria secondo l'algoritmo di Luscher
+*  e sostituisce
+*  V.U -> U
 */
-/*Antonio: The lagacy functions have been left in the file for past reference, although at the moment they are not used and are meant to be removed.*/
-
-#ifdef GAUGE_SON
-void ExpX_legacy(double dt, suNg_algebra_vector *h, suNg *r)
-{
-	error(0==0,1,"ExpX_legacy [suN_epx.c]","This functiona has yet not been implementd for SON");
-}
+#if  defined(GAUGE_SON) || defined(GAUGE_SPN)
+void ExpX(double dt, suNg_algebra_vector *h, suNg *r)
 #else
-#if defined(GAUGE_SPN)
-void ExpX_legacy(double dt, suNg_algebra_vector *h, suNg *r)
-#elif defined(GAUGE_SUN)
-void ExpX_legacy(double dt, suNg_algebra_vector *h, suNg *u)
+void ExpX(double dt, suNg_algebra_vector *h, suNg *u)
 #endif
 {
 #ifdef WITH_QUATERNIONS
@@ -78,7 +95,6 @@ $GROUP::EXPX:(dt):(*h):(*u)$
 
 #endif //WITH_QUATERNIONS
 }
-#endif
 
 
 
@@ -87,7 +103,7 @@ $GROUP::EXPX:(dt):(*h):(*u)$
 #define TI(a,b) ((a)*NG+(b)-1)
 
 
-void ExpX_legacy2(double dt, suNg_algebra_vector *h, suNg *u)
+void ExpX2(double dt, suNg_algebra_vector *h, suNg *u)
 {
 #ifdef WITH_QUATERNIONS
 
@@ -105,7 +121,7 @@ _suNg_times_suNg(*u,v_tmp,u_tmp);
 	double s[NG*(NG-1)/2][4];
 	double tmp;
 	double *hf = (double*)h;
-	double complex *uf = (double complex*)u;
+	complex *uf = (complex*)u;
 	
 	d[0] = 0.0;
 	for(i = 1; i < NG; i++) {

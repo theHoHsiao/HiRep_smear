@@ -1,0 +1,52 @@
+[MAIN][0]Compiled with macros: -DBC_T_ANTIPERIODIC -DBC_X_PERIODIC -DBC_Y_PERIODIC -DBC_Z_PERIODIC -DUPDATE_EO -DIO_FLUSH -DREPR_ANTISYMMETRIC -DREPR_NAME=@REPR_ANTISYMMETRIC@ -DGAUGE_SPN
+[MAIN][0]PId =  0 [world_size: 1]
+[MAIN][0]
+[MAIN][0]input file [input_file_chimera]
+[MAIN][0]output file [mesons.out]
+[MAIN][0]list file [list_chimera]
+[READINPUT][0]Warning: input parameter [Include four fermion interactions] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [Smearing a lot at once] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [hopping expansion hits] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [hopping expansion degree] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [electric field nEz] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [electric charge] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable discon volume] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable discon gfwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable discon semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable Dirichlet gfwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable Dirichlet point] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable Dirichlet semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable extended point] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable extended semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable default gfwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable default point] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable default semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [number of noisy sources per cnfg for disconnected] not found in [input_file_chimera]!
+[MAIN][0]RLXD [1,14831]
+[MAIN][0]Gauge group: SP(4)
+[MAIN][0]Fermion representation: REPR_ANTISYMMETRIC [dim=5]
+[GEOMETRY][0]Global size is 4x4x4x4
+[GEOMETRY][0]Proc grid is 1x1x1x1
+[GEOMETRY][0]Local size is 4x4x4x4
+[GEOMETRY][0]Extended local size is 4x4x4x4
+[GEOMETRY][0]Geometry variable checked
+[GEOMETRY][0]Gauge field: size 256 nbuffer 0 
+[GEOMETRY][0]Spinor field (EO): size 256 nbuffer 0 
+[GEOMETRY][0]Even Spinor field: size 128 nbuffer 0 
+[GEOMETRY][0]Odd Spinor field: size 128 nbuffer 0 
+[BCS][0]Gauge field: PERIODIC x PERIODIC PERIODIC PERIODIC
+[BCS][0]Fermion fields: ANTIPERIODIC x PERIODIC PERIODIC PERIODIC
+[MAIN][0]Inverter precision = 1.000000e-20
+[MAIN][0]Mass[0] = -0.800000
+[MAIN][0]Number of noisy sources per cnfg = 1. Does not affect point sources
+[MAIN][0]Measuring Gamma Gamma correlators and PCAC-mass
+[MAIN][0]Configuration from ../../../Chimera/data/run1_4x4x4x4nc4rASYnf5b6.700000m0.800000n20
+[IO][0]Configuration [../../../Chimera/data/run1_4x4x4x4nc4rASYnf5b6.700000m0.800000n20] read [0 sec 277 usec] Plaquette=5.616589e-01
+[TEST][0]<p> 0.561659
+[PLAQ][0]Plaq(1,0) = ( 0.573625 , 0.000000 )
+[PLAQ][0]Plaq(2,0) = ( 0.572900 , 0.000000 )
+[PLAQ][0]Plaq(2,1) = ( 0.544839 , 0.000000 )
+[PLAQ][0]Plaq(3,0) = ( 0.568509 , 0.000000 )
+[PLAQ][0]Plaq(3,1) = ( 0.545695 , 0.000000 )
+[PLAQ][0]Plaq(3,2) = ( 0.564385 , 0.000000 )
+[MAIN][0]Configuration #1: analysed in [0 sec 4 usec]

@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "setup.h"
 #include "io.h"
 #include "update.h"
 #include "geometry.h"
@@ -29,7 +28,7 @@ static suNg_field *g;
 
 
 
-static void loc_D(spinor_field *out, spinor_field *in){
+static void D(spinor_field *out, spinor_field *in){
    Dphi(hmass,out,in);
 }
 
@@ -71,7 +70,7 @@ int main(int argc,char *argv[])
     /* setup random numbers */
     read_input(rlx_var.read,"test_input");
     lprintf("MAIN",0,"RLXD [%d,%d]\n",rlx_var.rlxd_level,rlx_var.rlxd_seed+MPI_PID);
-    rlxd_init(rlx_var.rlxd_level,rlx_var.rlxd_seed+MPI_PID);
+    rlxd_init(rlx_var.rlxd_level,rlx_var.rlxd_seed+MPI_PID); /* use unique MPI_PID to shift seeds */
     
   
   

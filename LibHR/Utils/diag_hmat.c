@@ -1,12 +1,12 @@
 /*******************************************************************************
- *
- * File  diag_hmat.c
- *
- * Function to diagonalize NxN hermitean matrix 
- *
- * Ari Hietanen
- *
- *******************************************************************************/
+*
+* File  diag_hmat.c
+*
+* Function to diagonalize NxN hermitean matrix 
+*
+* Ari Hietanen
+*
+*******************************************************************************/
 
 #ifdef GAUGE_SON
 
@@ -32,7 +32,7 @@ void diag_hmat(suNg *hmat, double *diag){
 
 void tridiagonalize(suNg *hmat, double *diag, double* roffdiag){
   suNg_vector offdiag,realtrans;
-  double complex f,g,ctmp;
+  complex f,g,ctmp;
   double h,scale,fa,hh;
   int i,j,k,l;
   for (i=NG-1;i>0;i--){//loop over the components of column vector 
@@ -42,56 +42,55 @@ void tridiagonalize(suNg *hmat, double *diag, double* roffdiag){
       for (k=0;k<l+1;k++) //i'th row, called x in comments
 	scale += fabs(hmat->c[i*NG+k]);
       if (scale == 0.0) ///Skip transformation
-        {
-          offdiag.c[i] = hmat->c[i*NG+l];
-        }
+      { offdiag.c[i].re = hmat->c[i*NG+l]; offdiag.c[i].im=0.; }
       else{
 	for (k=0;k<l+1;k++){
 	  hmat->c[i*NG+k]*=1.0/scale; //Use scaled matrix for transformation
 	  h += hmat->c[i*NG+k]*hmat->c[i*NG+k]; //_complex_prod_re(hmat->c[i*NG+k],hmat->c[i*NG+k]); //calculate normalization h=|x|^2
 	}
-        f = hmat->c[i*NG+l]; //f=x[0]
-        fa = sqrt(creal(f)*creal(f));
+          f.re = hmat->c[i*NG+l]; f.im=0.; //f=x[0]
+	  fa = sqrt(f.re*f.re);
 	if (fa!=0){ // g = -x[0]*|x|/|x[0]|
 	  _complex_mulr(g,-sqrt(h)/fa,f);
 	}
 	else{
-	  g = -sqrt(h);
+	  g.re = -sqrt(h);
+	  g.im = 0.0;
 	}
 	_complex_mulr(offdiag.c[i],scale,g); //stores off-diagonal values
 	h -= _complex_prod_re(f,g); // h = 1/2 |u|^2; u = x - e[l]*|x|
-	hmat->c[i*NG+l]=creal(f)-cimag(g);
+	hmat->c[i*NG+l]=f.re-g.re;
 	_complex_0(f);
 	for (j=0;j<l+1;j++){
 	  hmat->c[j*NG+i] = hmat->c[i*NG+j]/h; //Keep matrix hermitean
 	  _complex_0(g);
 	  for (k=0;k<j+1;k++){
-	    g+=hmat->c[i*NG+k]*hmat->c[j*NG+k];
+	    g.re+=hmat->c[i*NG+k]*hmat->c[j*NG+k];
 	  }
 	  for (k=j+1;k<l+1;k++){
-	    g+=hmat->c[i*NG+k]*hmat->c[k*NG+j];
+	    g.re+=hmat->c[i*NG+k]*hmat->c[k*NG+j];
 	  }
 	  _complex_mulr(offdiag.c[j],1.0/h,g);
 	  _complex_mulr_assign(f,hmat->c[i*NG+j],offdiag.c[j]);
 	}
 
-	hh = creal(f)/(h+h);
+	hh = f.re/(h+h);
 	for (j=0;j<l+1;j++){
-	  f = hmat->c[i*NG+j]+I*cimag(f);
+	  f.re = hmat->c[i*NG+j];
 	  _complex_mulr(ctmp,hh,f);
 	  _complex_sub(g,offdiag.c[j],ctmp);
 	  offdiag.c[j] = g;
 	  for (k=0;k<j+1;k++){
 	    _complex_mulr(ctmp,hmat->c[i*NG+k],g);
-            _complex_star(ctmp,ctmp);
+        _complex_star(ctmp,ctmp);
 	    _complex_mul_star_assign(ctmp,offdiag.c[k],f);
-	    hmat->c[j*NG+k]-=creal(ctmp);
+	    hmat->c[j*NG+k]-=ctmp.re;
 	  }
 	}
       }
     }
     else{
-      offdiag.c[i]=hmat->c[i*NG+l]+I*cimag(offdiag.c[i]);
+      offdiag.c[i].re=hmat->c[i*NG+l];
     }
     diag[i]=h;
   }
@@ -103,11 +102,11 @@ void tridiagonalize(suNg *hmat, double *diag, double* roffdiag){
       for (j=0;j<l;j++){
 	_complex_0(g);
 	for (k=0;k<l;k++){
-	  g+=hmat->c[NG*i+k]*hmat->c[NG*k+j];
+	  g.re+=hmat->c[NG*i+k]*hmat->c[NG*k+j];
 	}
 	for (k=0;k<l;k++){
 	  _complex_mulr(ctmp,hmat->c[NG*k+i],g);
-	  hmat->c[NG*k+j]-=creal(ctmp);	  
+	  hmat->c[NG*k+j]-=ctmp.re;	  
 	}
       }
     }
@@ -133,8 +132,8 @@ void tridiagonalize(suNg *hmat, double *diag, double* roffdiag){
   for (i=0;i<NG;i++){
     for (j=0;j<NG;j++){
       _complex_mulr(ctmp,hmat->c[NG*j+i],realtrans.c[i]);
-      _complex_star(ctmp,ctmp);
-      hmat->c[NG*j+i]=creal(ctmp);
+        _complex_star(ctmp,ctmp);
+      hmat->c[NG*j+i]=ctmp.re;
     }
   }
   for (i=1;i<NG;i++) roffdiag[i-1]=roffdiag[i];
@@ -144,7 +143,7 @@ void tridiagonalize(suNg *hmat, double *diag, double* roffdiag){
 void diag_tridiag(suNg* hmat, double *diag, double* offdiag){
   int i,k,l,m,iter;
   double g,r,s,c,p,f,b,dd;
-  double  ctmp;
+  complex ctmp;
   for (l=0;l<NG;l++){
     iter = 0;
     do {
@@ -177,11 +176,11 @@ void diag_tridiag(suNg* hmat, double *diag, double* offdiag){
 	  diag[i+1] = g + p;
 	  g = c*r - b;
 	  for (k=0;k<NG;k++){
-            ctmp = hmat->c[k*NG+i+1];
+          ctmp.re = hmat->c[k*NG+i+1];
 	    hmat->c[k*NG+i+1]=s*hmat->c[k*NG+i];
-	    hmat->c[k*NG+i+1]+=c*ctmp;
+	    hmat->c[k*NG+i+1]+=c*ctmp.re;
 	    hmat->c[k*NG+i]=c*hmat->c[k*NG+i];
-	    hmat->c[k*NG+i]-=s*ctmp;
+	    hmat->c[k*NG+i]-=s*ctmp.re;
 	  }
 	}
 	if ( r == 0 && i>=l) continue;

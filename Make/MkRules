@@ -5,25 +5,17 @@
 
 
 SHELL = /bin/bash
-unexport MACRO
+
 include $(MKDIR)/MkFlags
 
 MAKEFLAGS += -s
 MAKEFLAGS += -r
 #NO_COLOR_OUT = 1
 
-TESTEXES ?= $(foreach _file, ${TESTS}, $(shell ${MKDIR}/Utils/check_compile.py -f $(_file) -n ${NG} -r $(REPR)  -g ${GAUGE_GROUP} -s "$(MACRO)" ) )
-EXES += $(TESTEXES)
 SRCS += $(patsubst %,%.c,$(EXES))
 #OBJS = $($(filter-out $(EXCLUDE),$(SRCS)):.c=.o)
 OBJS = $(patsubst %.c,%.o,$(filter-out $(EXCLUDE),$(SRCS)))
 ALIBNAME = $(abspath $(LIBNAME))
-
-
-ifeq ($(findstring -DWITH_MPI,$(MACRO)),-DWITH_MPI)
-	CC = $(MPICC)
-	RUNTEST = $(MKDIR)/Utils/mpi_test_wrapper.pl
-endif
 
 #Colorization
 ifneq ($(NO_COLOR_OUT),1)
@@ -51,19 +43,16 @@ _col_comp := $(_col_bold)$(_col_blue)
 _col_link := $(_col_background)$(_col_bold)$(_col_blue)
 _col_write := $(_col_bold)$(_col_blue)
 _col_fname := $(_col_bold)
-_col_test := $(_col_bold)
 _col_done := $(_col_green)
-_col_passed := $(_col_background)$(_col_bold)$(_col_green)
-_col_failed := $(_col_background)$(_col_bold)$(_col_blink)$(_col_red)
+_col_failed := $(_col_bold)$(_col_blink)$(_col_red)
 
 endif
 
 _rname = $(subst $(abspath $(TOPDIR)),%,$(abspath $(1)))
 _testdir = $(subst $(CURDIR)/,,$(dir $(abspath $(1))))
 _cfname = [$(_col_fname)$(1)$(_col_norm)]
+_cfailed := $(_col_failed)failed$(_col_norm)
 _cdone := $(_col_done)done$(_col_norm)
-_cfailed := $(_col_failed) FAIL $(_col_norm)
-_cpassed := $(_col_passed) OK $(_col_norm)
 
 CDIR = $(call _rname, $(CURDIR))
 LNAME = $(call _rname, $(ALIBNAME))
@@ -74,7 +63,8 @@ WQUAT = $(if $(findstring -DWITH_QUATERNIONS,$(MACRO)),1,0)
 
 #Include
 INCDIR = $(TOPDIR)/Include
-INC = -I $(INCDIR) $(INCLUDE)
+INC = -I $(INCDIR)
+
 GCC = gcc
 CXX ?= g++
 CPPFLAGS += $(MACRO)
@@ -82,13 +72,6 @@ CPPFLAGS += $(INC)
 
 ifndef REPR
   $(error Error: must specify fermion representation!)
-endif
-
-# SP2 is not a valid target (use SU2 instead)
-ifeq "$(GAUGE_GROUP)" "GAUGE_SPN" 
-   ifeq "$(NG)"  "2" 
-      $(error Error: Not supported. For NG=2 use GAUGE_SUN instead.)
-   endif
 endif
 
 
@@ -101,7 +84,8 @@ _objs: $(OBJS)
 	if test "$(call _testdir, $@)" = ""; then \
 	  echo -n "$(_col_deps)Dependences$(_col_norm) for $(call _cfname,$(call _rname,$(SRC)))..." ;\
 	  ($(GCC) -MM -MG -MT "$@ $(patsubst .%.d,%.o,$@)" $(CPPFLAGS) $(SRC) > $@ &&\
-	  echo " $(_cdone)" || ( echo " $(_cfailed)" && false ) )\
+	  echo " $(_cdone)" || ( echo " $(_cfailed)" && false ) )&&\
+	  MAKEFILES="$@" $(MAKE) $@ ;\
 	else \
 	  $(MAKE) -C $(dir $@) $(notdir $@) ;\
 	fi
@@ -111,9 +95,10 @@ RBLD = $(if $(DFILES),,rebuild)
 
 %.o: SRC=$(patsubst %.o,%.c,$@)
 %.o: DEP=$(patsubst %.o,.%.d,$@)
-%.o: %.c .%.d $(MKDIR)/MkFlags $(INCDIR)/.autoheaders.h $(RBLD)
+%.o: %.c $(MKDIR)/MkFlags $(RBLD) $(INCDIR)/.autoheaders.h
 	if  test "$(call _testdir, $@)" = ""; then \
 	  if test "$(DFILES)" = ""; then \
+	    $(MAKE) $(DEP) &&\
 	    MAKEFILES="$(DEP)" $(MAKE) $@ ;\
 	  else \
 	    echo -n "$(_col_comp)Compiling$(_col_norm) $(call _cfname,$(call _rname,$(CURDIR)/$@))..." ;\
@@ -121,9 +106,8 @@ RBLD = $(if $(DFILES),,rebuild)
 	    echo " $(_cdone)" || ( echo " $(_cfailed)" && false) ;\
 	  fi ;\
 	else \
-	  MAKEFILES="$(patsubst %.o,.%.d,$(notdir $@))" $(MAKE) -C $(dir $@) $(notdir $@) ;\
+	  $(MAKE) -C $(dir $@) $(notdir $@) ;\
 	fi
-
 
 $(INCDIR)/.autoheaders.h: $(MKDIR)/MkFlags 
 	if  test "$(call _testdir, $@)" != ""; then \
@@ -159,13 +143,11 @@ $(ALIBNAME) $(notdir $(ALIBNAME)): $(LIBOBJS) $(OBJ)
 
 
 $(LIBS): $(if $(call _testdir, $@),,rebuild) $(INCDIR)/.autoheaders.h
-	if ! test -f $(dir $@)/.lib.updated ; then \
-	  if  test "$(call _testdir, $@)" != ""; then \
-	    $(MAKE) -C $(dir $@) $(notdir $@) ;\
-	  fi ;\
-	fi
+	if  test "$(call _testdir, $@)" != ""; then \
+	  $(MAKE) -C $(dir $@) $(notdir $@) ;\
+	fi 
 
-.PRECIOUS: %.c .%.d
+.PRECIOUS: %.c
 
 #avoid the use of implicit suffix rules!
 .SUFFIXES:
@@ -188,7 +170,7 @@ $(patsubst %,clean-%,$(SUBDIRS)):
 
 clean:: $(patsubst %,clean-%,$(SUBDIRS))
 	echo -n "$(_col_clean)Cleaning$(_col_norm) $(call _cfname,$(CDIR))..."
-	rm -f *.o *.rpo *~ *.il *.dyn *.ii *.s .*.d *.a cinfo.c .lib.updated
+	rm -f *.o *.rpo *~ *.il *.dyn *.ii *.s .*.d *.a cinfo.c
 	echo " $(_cdone)"
 	if test "$(EXES)" != "" -a "$(CEXE)" != "" ; then \
 	  echo -n "$(_col_clean)Removing EXEs$(_col_norm) in $(call _cfname,$(CDIR))..." ;\
@@ -199,11 +181,8 @@ clean:: $(patsubst %,clean-%,$(SUBDIRS))
 cleanall::
 	CEXE="all" $(MAKE) clean
 
-LOCK_CINFO:= lock.cinfo
-
 cinfo.c: $(MKDIR)/MkFlags $(MKDIR)/MkRules $(MKDIR)/Utils/cinfo.sh
 	$(MKDIR)/Utils/cinfo.sh $(MKDIR) $(TOPDIR) $(MACRO)
-
 
 LDFLAGS += $(foreach _lib, $(LIBS),-L$(dir $(_lib)))
 LDFLAGS += $(foreach _lib, $(LIBS),-l$(patsubst lib%.a,%,$(notdir $(_lib))))
@@ -216,15 +195,5 @@ $(1): $(1).o $$($(1)_OBJS) $$(COMMON_OBJS) $$(LIBS)
 	echo " $$(_cdone)" || ( echo " $$(_cfailed)" && false )
 endef
 
-
 $(foreach prog,$(EXES),$(eval $(call LINK_template,$(prog))))
 
-define RUNTEST_template
-echo -n "$(_col_test)["$(1)"]$(_col_norm) ..." ; rm -f debug out_0 err_0 ; \
-export OMPI_MCA_btl_base_warn_component_unused=0 ;\
-$(RUNTEST) ./$(1) -i $(1).in >/dev/null && echo " $(_cpassed)" || ( echo " $(_cfailed)" && touch .test_failed && tail -n 80 out_0 && cp out_0 $(1).out );
-endef
-
-runtests:
-	rm -f .test_failed
-	$(foreach prog,$(EXES),$(call RUNTEST_template,$(prog)))

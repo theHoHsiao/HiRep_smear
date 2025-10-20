@@ -39,11 +39,7 @@ printf("[%d] " #c " = %e\n",cgiter,c)
 
 static double spinor_field_g5_prod_re_f_f2d(spinor_field_flt *s1, spinor_field_flt *s2)
 {
-   static double res;
-    _OMP_PRAGMA ( single )
-    { 
-      res = 0.;
-    }
+  double res=0.;
   
   _TWO_SPINORS_FOR_SUM(s1,s2,res) {
     float prod;
@@ -58,11 +54,7 @@ static double spinor_field_g5_prod_re_f_f2d(spinor_field_flt *s1, spinor_field_f
 
 static double spinor_field_sqnorm_f_f2d(spinor_field_flt *s1)
 {
-   static double res;
-    _OMP_PRAGMA ( single )
-    { 
-      res = 0.;
-    }
+  double res=0.;
   
   _ONE_SPINOR_FOR_SUM(s1,res) {
     float prod;
@@ -151,7 +143,6 @@ static int g5QMR_mshift_core(short *valid, mshift_par *par, spinor_operator M, s
     flags[i]=1;
   }
   delta = spinor_field_g5_prod_re_f(p2,p2);
-  error( fabs(delta) < 1.e-28, 1,"g5QMR "__FILE__,"g5 norm of the initial guess is zero, change the initial guess");
   beta = delta;
   
   /* cg recursion */
@@ -630,5 +621,3 @@ int g5QMR_fltacc( g5QMR_fltacc_par* par, spinor_operator M, spinor_operator_flt 
 
   return cgiter_flt+cgiter_minres;
 }
-
-

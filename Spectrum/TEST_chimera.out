@@ -1,0 +1,339 @@
+[MAIN][0]Compiled with macros: -DBC_T_ANTIPERIODIC -DBC_X_PERIODIC -DBC_Y_PERIODIC -DBC_Z_PERIODIC -DUPDATE_EO -DIO_FLUSH -DREPR_ANTISYMMETRIC -DREPR_NAME=@REPR_ANTISYMMETRIC@ -DGAUGE_SPN
+[MAIN][0]PId =  0 [world_size: 1]
+[MAIN][0]
+[MAIN][0]input file [input_file_chimera]
+[MAIN][0]output file [TEST_chimera.out]
+[MAIN][0]list file [list_chimera]
+[MAIN][0]RLXD [1,14831]
+[MAIN][0]Gauge group: SP(4)
+[MAIN][0]Fermion representation: REPR_ANTISYMMETRIC [dim=5]
+[GEOMETRY][0]Global size is 4x4x4x4
+[GEOMETRY][0]Proc grid is 1x1x1x1
+[GEOMETRY][0]Local size is 4x4x4x4
+[GEOMETRY][0]Extended local size is 4x4x4x4
+[GEOMETRY][0]Geometry variable checked
+[GEOMETRY][0]Gauge field: size 256 nbuffer 0 
+[GEOMETRY][0]Spinor field (EO): size 256 nbuffer 0 
+[GEOMETRY][0]Even Spinor field: size 128 nbuffer 0 
+[GEOMETRY][0]Odd Spinor field: size 128 nbuffer 0 
+[BCS][0]Gauge field: PERIODIC x PERIODIC PERIODIC PERIODIC
+[BCS][0]Fermion fields: ANTIPERIODIC x PERIODIC PERIODIC PERIODIC
+[MAIN][0]Inverter precision = 1.000000e-18
+[MAIN][0]Mass[0] = -0.800000
+[MAIN][0]mf[0] = -0.500000
+[MAIN][0]mas[0] = -0.800000
+[MAIN][0]Number of noisy sources per cnfg = 1. Does not affect point sources
+[MAIN][0]APE smearing activate on Gaussian smearing
+[MAIN][0]Fundamental Smear source to several Ns_sink
+[MAIN][0]Antisymmetry Smear source to several Ns_sink
+[MAIN][0]Measuring Gamma Gamma correlators and PCAC-mass
+[MAIN][0]Configuration from ../../Chimera/data/run1_4x4x4x4nc4rASYnf5b6.700000m0.800000n20
+[IO][0]Configuration [../../Chimera/data/run1_4x4x4x4nc4rASYnf5b6.700000m0.800000n20] read [0 sec 8833 usec] Plaquette=5.616589e-01
+[TEST][0]<p> 0.561659
+[PLAQ][0]Plaq(1,0) = ( 0.573625 , 0.000000 )
+[PLAQ][0]Plaq(2,0) = ( 0.572900 , 0.000000 )
+[PLAQ][0]Plaq(2,1) = ( 0.544839 , 0.000000 )
+[PLAQ][0]Plaq(3,0) = ( 0.568509 , 0.000000 )
+[PLAQ][0]Plaq(3,1) = ( 0.545695 , 0.000000 )
+[PLAQ][0]Plaq(3,2) = ( 0.564385 , 0.000000 )
+[APE][0]APE smearing with val=0.400000 
+[APE][0]N=0 <p>_s = 0.551640
+[APE][0]N=50 <p>_s = 0.999614
+[FUND_POLYAKOV][0]Polyakov direction 0 = 0.00000000e+00 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 0 = -2.50000000e-01
+[FUND_POLYAKOV][0]Polyakov direction 1 = -5.51854344e-01 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 1 = 1.06886711e+00
+[FUND_POLYAKOV][0]Polyakov direction 2 = -2.45257816e-01 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 2 = 7.80851728e-02
+[FUND_POLYAKOV][0]Polyakov direction 3 = -7.67890515e-01 0.00000000e+00
+[ADJ_POLYAKOV][0]Polyakov direction 3 = 2.13363683e+00
+[PLAQ][0]Plaq(1,0) = ( 0.000000 , 0.000000 )
+[PLAQ][0]Plaq(2,0) = ( 0.000000 , 0.000000 )
+[PLAQ][0]Plaq(2,1) = ( 0.999500 , 0.000000 )
+[PLAQ][0]Plaq(3,0) = ( 0.000000 , 0.000000 )
+[PLAQ][0]Plaq(3,1) = ( 0.999734 , 0.000000 )
+[PLAQ][0]Plaq(3,2) = ( 0.999610 , 0.000000 )
+[APE][0]APE smearing END 
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]Fundamental source smearing epsilon = 0.200000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 46 ; 46
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 47
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 46 ; 46
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 47
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 47 ; 47
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 48
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 47 ; 47
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 48
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]Fundamental source smearing epsilon = 0.200000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 45 ; 45
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 46
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 47 ; 47
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 48
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 48 ; 48
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 49
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 46 ; 46
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 47
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]Fundamental source smearing epsilon = 0.200000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 46 ; 46
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 47
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 46 ; 46
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 47
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 47 ; 47
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 48
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 47 ; 47
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 48
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]Fundamental source smearing epsilon = 0.200000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 47 ; 47
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 48
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 45 ; 45
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 46
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 46 ; 46
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 47
+[CALC_PROPAGATOR_fund][10]n masses=1, mass = -0.5
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 48 ; 48
+[CALC_PROP_CORE_fund][10]QMR_eo MVM = 49
+[CHIM][0]Fundamentl meson 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5= 5.407902e-05 9.918213e-06 4.190960e-06 9.550963e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET id= -1.936499e-05 5.901730e-06 2.056916e-06 5.673298e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET id_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0= -5.328025e-05 1.484125e-06 1.355147e-06 1.459847e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0_im= -1.046577e-23 -6.079858e-24 -8.815956e-24 8.388128e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g1= 4.204261e-05 7.315131e-06 3.241366e-06 6.798922e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g1_im= -8.876036e-24 -2.488004e-24 -4.043007e-25 -4.181745e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g2= 4.262421e-05 7.303184e-06 3.127507e-06 7.058471e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g2_im= -6.365413e-25 -2.126113e-24 1.667690e-24 7.437759e-25 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g3= 3.778208e-05 6.090722e-06 2.735994e-06 5.862194e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g3_im= -1.172916e-24 -5.588720e-24 -6.851402e-24 -3.399195e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g1= 2.844218e-05 4.376549e-06 2.132395e-06 4.215191e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g1_im= -1.969683e-23 2.886570e-23 2.960892e-24 1.521439e-23 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g2= 2.787809e-05 4.238274e-06 2.221487e-06 4.005354e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g2_im= 3.220794e-23 5.281354e-24 7.808082e-25 1.894680e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g3= 3.265086e-05 5.393808e-06 2.523266e-06 5.028365e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g3_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5= 1.958269e-05 2.848561e-06 1.779140e-06 2.682915e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5_im= 5.354056e-24 8.912790e-24 3.153424e-25 -6.449424e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5g1= -2.821250e-05 4.732576e-06 1.865405e-06 4.661013e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5g1_im= 2.193644e-23 -2.061489e-24 -3.461395e-25 5.755529e-26 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5g2= -2.767184e-05 4.905102e-06 1.853316e-06 4.643790e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5g2_im= 1.218476e-23 2.022715e-24 3.179879e-24 9.144829e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5g3= -3.240773e-05 3.879194e-06 1.656944e-06 3.753287e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5g3_im= 5.961517e-24 -2.900383e-24 6.506272e-24 -7.664345e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5g1= -4.163293e-05 2.797219e-06 1.453990e-06 2.615717e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5g1_im= 2.256612e-23 -1.504112e-24 5.792360e-24 3.797841e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5g2= -4.220173e-05 2.702932e-06 1.522729e-06 2.803823e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5g2_im= 1.721610e-23 -8.094092e-25 -1.498129e-24 7.753607e-24 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5g3= -3.744282e-05 3.825380e-06 1.758137e-06 3.665922e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g0g5g3_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5_g0g5_re= 1.543496e-07 -3.892911e-06 9.991339e-09 3.591404e-06 
+[MAIN][0]conf #1 mass=-0.500000 source_N20_sink_N0_fund TRIPLET g5_g0g5_im= -9.648286e-24 -5.020841e-24 -5.196940e-24 -2.954101e-24 
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]source smearing epsilon = 0.100000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 52 ; 52
+[CALC_PROP_CORE][10]QMR_eo MVM = 53
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]source smearing epsilon = 0.100000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]source smearing epsilon = 0.100000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]source smearing epsilon = 0.100000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 52 ; 52
+[CALC_PROP_CORE][10]QMR_eo MVM = 53
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 52 ; 52
+[CALC_PROP_CORE][10]QMR_eo MVM = 53
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[SMEAR][0]Smeared Source at (0,0,0,0) with APE smearing 
+[SMEAR][0]source smearing epsilon = 0.100000 iterations: 
+[SMEAR][0]1...2...3...4...5...6...7...8...9...10...11...12...13...14...15...16...17...18...19...20...
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 51 ; 51
+[CALC_PROP_CORE][10]QMR_eo MVM = 52
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 52 ; 52
+[CALC_PROP_CORE][10]QMR_eo MVM = 53
+[CHIMERA][0]Antisymmetry meson 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5= 2.025204e-03 4.713474e-04 2.367380e-04 4.516970e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET id= -1.003813e-03 1.618084e-04 7.230865e-05 1.607448e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET id_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0= -1.966033e-03 7.916153e-05 6.700325e-05 7.143419e-05 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0_im= -1.103252e-22 1.225778e-22 1.964037e-22 -1.893468e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g1= 1.608044e-03 3.215228e-04 1.638305e-04 3.124651e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g1_im= -1.038629e-21 -2.695316e-22 2.604326e-24 -5.023878e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g2= 1.443500e-03 2.957498e-04 1.598847e-04 2.915489e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g2_im= 1.154951e-22 -4.976008e-23 6.005460e-23 6.935877e-23 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g3= 1.667890e-03 3.503022e-04 1.733837e-04 3.292030e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g3_im= -1.897346e-22 -2.962341e-23 1.939222e-22 1.415254e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g1= 1.232130e-03 2.318850e-04 1.289403e-04 2.322814e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g1_im= -2.072507e-22 -2.579802e-22 2.461896e-22 1.093526e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g2= 1.347988e-03 2.528558e-04 1.309920e-04 2.389226e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g2_im= -7.969465e-22 6.276556e-23 -8.675057e-23 3.600724e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g3= 1.181153e-03 2.182943e-04 1.252457e-04 2.143921e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g3_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5= 1.013580e-03 1.798100e-04 1.095673e-04 1.782925e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5_im= -2.923049e-22 -1.206133e-22 -8.731925e-23 -2.571756e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5g1= -1.220617e-03 1.356054e-04 6.800765e-05 1.292792e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5g1_im= 6.289675e-22 -1.454545e-22 -1.063056e-23 -1.260206e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5g2= -1.333195e-03 1.281846e-04 6.449394e-05 1.269364e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5g2_im= 5.390116e-22 -3.955216e-22 -1.976122e-22 2.882692e-23 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5g3= -1.168889e-03 1.439968e-04 6.639580e-05 1.551639e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5g3_im= 4.554663e-22 3.158796e-23 3.097274e-22 2.953810e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5g1= -1.581823e-03 1.137406e-04 6.350451e-05 1.150955e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5g1_im= 2.601903e-22 3.043023e-22 -1.068097e-22 2.008401e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5g2= -1.421818e-03 1.181161e-04 6.496564e-05 1.227811e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5g2_im= -6.605457e-22 -5.366657e-23 -4.807987e-23 -6.462769e-22 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5g3= -1.638003e-03 9.794334e-05 6.549559e-05 9.104320e-05 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g0g5g3_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5_g0g5_re= -4.186856e-06 -2.176840e-04 1.936679e-07 2.035732e-04 
+[MAIN][0]conf #1 mass=-0.800000 source_N20_sink_N0_anti TRIPLET g5_g0g5_im= 9.257185e-22 2.172642e-22 -4.663231e-23 1.153012e-22 
+[CHIMERA][0]CHIMERA BARYON CONTRACTION DONE!
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OA_even_re= 4.182942e-05 -3.345950e-06 -4.803935e-07 -8.752713e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OA_even_im= -2.481492e-19 7.673961e-20 -6.087700e-21 -8.242002e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OA_odd_re= 4.178145e-05 9.412164e-07 5.063869e-07 3.227732e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OA_odd_im= 4.413109e-19 -2.552299e-20 6.027626e-21 2.433214e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OC_even_re= 1.950523e-05 -1.440008e-06 -3.559419e-07 -4.380626e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OC_even_im= 2.528732e-20 1.671991e-20 -1.025411e-20 -4.817877e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OC_odd_re= 1.940880e-05 5.022542e-07 3.659707e-07 1.367169e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OC_odd_im= 2.395680e-19 8.830075e-21 1.107606e-20 3.174430e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OAC_even_re= -3.876304e-09 -1.354107e-06 -9.462789e-08 3.011776e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OAC_even_im= 2.418107e-20 2.849803e-20 7.357280e-21 1.804399e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OAC_odd_re= -2.746757e-07 3.297528e-07 -8.430568e-08 -1.292066e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OAC_odd_im= -1.310507e-20 -1.078035e-20 9.948592e-22 -1.245879e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OCA_even_re= -6.220189e-08 -1.792773e-06 -1.426442e-07 3.556413e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OCA_even_im= 8.646054e-21 2.998178e-20 9.822498e-21 4.614026e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OCA_odd_re= -2.510741e-07 3.787756e-07 -1.229156e-07 -1.619004e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OCA_odd_im= -5.040911e-20 -3.171056e-20 8.823303e-22 -2.131319e-20 
+[CHIMERA][0]CHIMERA BARYON CONTRACTION DONE!
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OB_even_re= 1.936461e-05 -7.836416e-07 -3.909445e-07 -2.467496e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OB_even_im= 2.322538e-19 1.227004e-20 -6.505055e-21 -1.061190e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OB_odd_re= 1.945938e-05 2.562688e-06 3.813314e-07 7.173780e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OB_odd_im= 2.151249e-20 -6.088484e-20 5.545871e-21 6.755742e-20 
+[CHIMERA][0]CHIMERA BARYON CONTRACTION DONE!
+[CHIMERA][0] With Spin and parity projection:
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_even_re= 3.456581e-05 -2.738460e-06 -4.420051e-07 -7.222598e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_even_im= -1.975209e-19 6.261292e-20 -8.706622e-21 -7.328845e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_odd_re= 3.448584e-05 7.976560e-07 4.606993e-07 2.614867e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_odd_im= 3.787806e-19 -1.170738e-20 5.616833e-21 1.711042e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV32_even_re= 6.796619e-05 -5.298084e-06 -8.558218e-07 -1.437483e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV32_even_im= -2.540977e-19 1.008448e-19 -1.243668e-20 -1.333182e-19 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV32_odd_re= 6.784186e-05 1.556400e-06 8.924317e-07 5.095585e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV32_odd_im= 7.302673e-19 -2.732249e-20 1.638266e-20 5.392635e-20 
+[CHIMERA][0]CHIMERA BARYON CONTRACTION DONE!
+[CHIMERA][0] With Spin projection only:
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_re= 6.905165e-05 -1.940804e-06 1.869419e-08 1.892607e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_im= 1.813493e-19 5.093237e-20 -3.092337e-21 -5.617957e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV32_re= 1.358080e-04 -3.741684e-06 3.660990e-08 3.658102e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV32_im= 4.758173e-19 7.353665e-20 3.939167e-21 -7.938983e-20 
+[CHIMERA][0]
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu1_nu1_re= 2.314237e-05 -6.800163e-07 7.843018e-09 6.274257e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu1_nu1_im= 1.086415e-19 2.214720e-20 -1.855153e-21 -2.265005e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu1_nu2_re= 1.800714e-06 -3.564110e-08 -1.580155e-09 5.999062e-08 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu1_nu2_im= 4.777329e-20 9.414780e-20 -1.186073e-20 -1.262303e-19 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu1_nu3_re= 1.864150e-06 -5.686730e-08 8.585341e-09 6.330098e-08 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu1_nu3_im= -6.631326e-20 8.792051e-21 3.312257e-21 1.770759e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu2_nu1_re= 2.035876e-06 -1.136031e-07 1.279159e-09 9.459156e-08 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu2_nu1_im= 9.823468e-21 -8.740226e-20 1.316234e-20 1.178262e-19 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu2_nu2_re= 2.467063e-05 -6.900737e-07 6.309648e-09 6.767045e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu2_nu2_im= 1.172839e-20 2.296988e-20 -1.230085e-21 -2.161171e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu2_nu3_re= -2.066651e-06 1.217109e-07 2.533403e-09 -1.039676e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu2_nu3_im= 3.978522e-20 -2.274581e-20 -4.253828e-21 1.096172e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu3_nu1_re= 2.781751e-06 -1.262795e-07 -1.641409e-08 7.454812e-08 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu3_nu1_im= 4.706958e-20 -1.004208e-20 -3.052708e-21 -2.301897e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu3_nu2_re= -2.065793e-06 8.721354e-08 1.070568e-09 -6.155514e-08 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu3_nu2_im= 2.262959e-21 1.700523e-20 2.017374e-21 1.323093e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu3_nu3_re= 2.123866e-05 -5.707140e-07 4.541529e-09 5.884770e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV12_mu3_nu3_im= 6.097944e-20 5.815287e-21 -7.098890e-24 -1.191781e-20 
+[CHIMERA][0]CHIMERA BARYON CONTRACTION DONE!
+[CHIMERA][0] NO projections: 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g1_g1_re= 6.860334e-05 -1.980462e-06 2.370064e-08 1.838768e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g1_g1_im= 4.310302e-19 3.402504e-20 -3.075561e-21 -4.672398e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g1_g2_re= 5.115023e-06 -1.345537e-07 -3.766534e-09 1.763626e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g1_g2_im= -4.084483e-20 -2.144433e-21 -7.917553e-21 -5.247219e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g1_g3_re= 6.346080e-06 -2.488616e-07 -6.583172e-09 2.520883e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g1_g3_im= 3.012297e-20 1.874209e-20 4.224841e-21 -9.604859e-21 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g2_g1_re= 5.267789e-06 -2.847963e-07 -6.195247e-09 1.765191e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g2_g1_im= 9.753245e-20 -8.649207e-23 5.173705e-21 2.127670e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g2_g2_re= 7.291860e-05 -2.013601e-06 2.202101e-08 2.008727e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g2_g2_im= 1.581913e-19 5.515537e-20 1.633611e-21 -5.259509e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g2_g3_re= -5.722596e-06 2.964758e-07 1.111220e-08 -2.327478e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g2_g3_im= -8.060565e-20 -6.649938e-21 8.610369e-22 2.873870e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g3_g1_re= 6.736872e-06 -2.437532e-07 -1.989542e-08 1.654978e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g3_g1_im= -1.249171e-19 1.791862e-20 -3.287066e-21 -4.191878e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g3_g2_re= -6.221026e-06 3.018113e-07 3.582696e-09 -2.474844e-07 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g3_g2_im= 6.225506e-20 1.034629e-20 -1.521851e-21 1.575151e-20 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g3_g3_re= 6.333776e-05 -1.688425e-06 9.582442e-09 1.703214e-06 
+[CHIMERA][0]conf #1 mf=-0.500000 mas=-0.800000 source_N20_sink_N0 Chimera_OV_g3_g3_im= 6.805897e-20 3.526106e-20 2.286793e-21 -3.625512e-20 
+[MAIN][0]Configuration #1: analysed in [2 sec 763252 usec]

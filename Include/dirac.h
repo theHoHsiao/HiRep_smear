@@ -11,10 +11,11 @@
 
 
 void Dphi_(spinor_field *out, spinor_field *in);
-void Dphi_fused_(spinor_field *out, spinor_field *in);
 void Dphi(double m0, spinor_field *out, spinor_field *in);
 void g5Dphi(double m0, spinor_field *out, spinor_field *in);
 void g5Dphi_sq(double m0, spinor_field *out, spinor_field *in);
+void g5Dphi_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void g5Dphi_sq_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
 
 void Dphi_flt_(spinor_field_flt *out, spinor_field_flt *in);
 void Dphi_flt(double m0, spinor_field_flt *out, spinor_field_flt *in);
@@ -39,6 +40,11 @@ void Dphi_eopre(double m0, spinor_field *out, spinor_field *in);
 void Dphi_oepre(double m0, spinor_field *out, spinor_field *in);
 void g5Dphi_eopre(double m0, spinor_field *out, spinor_field *in);
 void g5Dphi_eopre_sq(double m0, spinor_field *out, spinor_field *in);
+
+void Dphi_eopre_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void Dphi_oepre_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void g5Dphi_eopre_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void g5Dphi_eopre_sq_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
 
 void Dphi_eopre_flt(double m0, spinor_field_flt *out, spinor_field_flt *in);
 void Dphi_oepre_flt(double m0, spinor_field_flt *out, spinor_field_flt *in);
@@ -74,8 +80,6 @@ void tm_invert(spinor_field* out, spinor_field *in, mshift_par* mpar);
 void tm_invert_alt(spinor_field* out, spinor_field *in, mshift_par* mpar);
 
 
-
-
 /* Dirac operators with a four fermion interaction */
 void Dphi_eopre_4f(double m0, spinor_field *out, spinor_field *in, double shift);
 void Dphi_eopre_4f_dagger(double m0, spinor_field *out, spinor_field *in, double shift);
@@ -92,6 +96,15 @@ void Dff(spinor_field *out, spinor_field *in);
 void Dff_dagger(spinor_field *out, spinor_field *in);
 void Dff_sq(spinor_field *out, spinor_field *in);
 
+/* PX: for Mix Rep. */
+void Dphi_fund_(spinor_field_fund *out, spinor_field_fund *in);
+void Dphi_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void Dphi_eopre_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void Dphi_oepre_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void g5Dphi_eopre_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void g5Dphi_eopre_sq_fund(double m0, spinor_field_fund *out, spinor_field_fund *in);
+void H_fund(spinor_field_fund *out, spinor_field_fund *in);
+void D_fund(spinor_field_fund *out, spinor_field_fund *in);
+
 
 #endif
-	

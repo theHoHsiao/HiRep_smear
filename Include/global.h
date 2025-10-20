@@ -60,12 +60,6 @@ GLB_VAR(int,X_EXT,=0);
 GLB_VAR(int,Y_EXT,=0);
 GLB_VAR(int,Z_EXT,=0);
 
-/*path blocking size*/
-GLB_VAR(int,PB_T,=2);
-GLB_VAR(int,PB_X,=2);
-GLB_VAR(int,PB_Y,=2);
-GLB_VAR(int,PB_Z,=2);
-
 /* MPI stuff */
 GLB_VAR(int,WORLD_SIZE,=1); /* mpi rank for this process */
 GLB_VAR(int,CART_SIZE,=1); /* mpi rank for this process */
@@ -152,6 +146,10 @@ GLB_VAR(suNf_field,*u_gauge_APE_f,=NULL);
 GLB_VAR(suNg_field,*u_gauge_APE_s,=NULL);
 GLB_VAR(suNf_field_flt,*u_gauge_APE_f_flt,=NULL);
 
+/* Mix rep. */
+GLB_VAR(suNg_field,*u_gauge_f_fund,=NULL);/*Do I need to creat new field type? like suNf_field_fund? JW*/
+GLB_VAR(suNg_field,*u_gauge_APE_f_fund,=NULL);
+
 #if defined(GAUGE_SPN) && defined(REPR_FUNDAMENTAL)
 GLB_VAR(suNffull_field,*cl_term,=NULL);
 GLB_VAR(suNffull_field,*cl_force,=NULL);
@@ -161,6 +159,9 @@ GLB_VAR(suNf_field,*cl_force,=NULL);
 #endif
 GLB_VAR(ldl_field,*cl_ldl,=NULL);
 GLB_VAR(suNg_av_field,*suN_momenta,=NULL);
+#ifndef NDEBUG
+GLB_VAR(suNg_av_field,*suN_momenta_backup,=NULL);
+#endif
 GLB_VAR(suNg_scalar_field,*scalar_momenta,=NULL);
 GLB_VAR(int,gauge_field_active,=0); // whether gauge field interactions is active
 
@@ -177,6 +178,10 @@ GLB_VAR(int,gauge_field_active,=0); // whether gauge field interactions is activ
 #define pu_gauge_APE_f(ix,mu) ((u_gauge_APE_f->ptr)+coord_to_index(ix,mu))
 #define pu_gauge_APE_f_flt(ix,mu) ((u_gauge_APE_f_flt->ptr)+coord_to_index(ix,mu))
 #define pu_gauge_tmp(ix,mu) ((u_gauge_tmp->ptr)+coord_to_index(ix,mu))
+
+/* Mix rep. */
+#define pu_gauge_f_fund(ix,mu) ((u_gauge_f_fund->ptr)+coord_to_index(ix,mu))
+#define pu_gauge_APE_f_fund(ix,mu) ((u_gauge_APE_f_fund->ptr)+coord_to_index(ix,mu))
 
 /* input parameters */
 #include "input_par.h"
@@ -206,9 +211,13 @@ GLB_VAR(double,*rect_weight, =NULL);
 
 /* Theta Boundary conditions */
 #ifdef FERMION_THETA
-GLB_VAR(COMPLEX,eitheta[4],={{1.,0.}});
+GLB_VAR(complex,eitheta[4],={{1.,0.}});
 #endif
 
+
+#if defined(ROTATED_SF) && defined(UPDATE_EO)
+#error ROTATED_SF DOES NOT WORK WITH E/O PRECONDITIONING
+#endif
 
 
 #ifdef MEASURE_FORCE

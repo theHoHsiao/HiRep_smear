@@ -1,0 +1,155 @@
+[MAIN][0]Compiled with macros: -DBC_T_ANTIPERIODIC -DBC_X_PERIODIC -DBC_Y_PERIODIC -DBC_Z_PERIODIC -DUPDATE_EO -DIO_FLUSH -DREPR_ANTISYMMETRIC -DREPR_NAME=@REPR_ANTISYMMETRIC@ -DGAUGE_SPN
+[MAIN][0]PId =  0 [world_size: 1]
+[MAIN][0]
+[MAIN][0]input file [input_file_chimera]
+[MAIN][0]output file [test_spec.out]
+[MAIN][0]list file [list_chimera]
+[READINPUT][0]Warning: input parameter [Include four fermion interactions] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [Smearing a lot at once] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [hopping expansion hits] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [hopping expansion degree] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [electric field nEz] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [electric charge] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable discon volume] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable discon gfwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable discon semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable Dirichlet gfwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable Dirichlet point] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable Dirichlet semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable extended point] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable extended semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable default gfwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [enable default semwall] not found in [input_file_chimera]!
+[READINPUT][0]Warning: input parameter [number of noisy sources per cnfg for disconnected] not found in [input_file_chimera]!
+[MAIN][0]RLXD [1,14831]
+[MAIN][0]Gauge group: SP(4)
+[MAIN][0]Fermion representation: REPR_ANTISYMMETRIC [dim=5]
+[GEOMETRY][0]Global size is 4x4x4x4
+[GEOMETRY][0]Proc grid is 1x1x1x1
+[GEOMETRY][0]Local size is 4x4x4x4
+[GEOMETRY][0]Extended local size is 4x4x4x4
+[GEOMETRY][0]Geometry variable checked
+[GEOMETRY][0]Gauge field: size 256 nbuffer 0 
+[GEOMETRY][0]Spinor field (EO): size 256 nbuffer 0 
+[GEOMETRY][0]Even Spinor field: size 128 nbuffer 0 
+[GEOMETRY][0]Odd Spinor field: size 128 nbuffer 0 
+[BCS][0]Gauge field: PERIODIC x PERIODIC PERIODIC PERIODIC
+[BCS][0]Fermion fields: ANTIPERIODIC x PERIODIC PERIODIC PERIODIC
+[MAIN][0]Inverter precision = 1.000000e-20
+[MAIN][0]Mass[0] = -0.800000
+[MAIN][0]Number of noisy sources per cnfg = 1. Does not affect point sources
+[MAIN][0]Point sources
+[MAIN][0]Measuring Gamma Gamma correlators and PCAC-mass
+[MAIN][0]Configuration from ../../../Chimera/data/run1_4x4x4x4nc4rASYnf5b6.700000m0.800000n20
+[IO][0]Configuration [../../../Chimera/data/run1_4x4x4x4nc4rASYnf5b6.700000m0.800000n20] read [0 sec 278 usec] Plaquette=5.616589e-01
+[TEST][0]<p> 0.561659
+[PLAQ][0]Plaq(1,0) = ( 0.573625 , 0.000000 )
+[PLAQ][0]Plaq(2,0) = ( 0.572900 , 0.000000 )
+[PLAQ][0]Plaq(2,1) = ( 0.544839 , 0.000000 )
+[PLAQ][0]Plaq(3,0) = ( 0.568509 , 0.000000 )
+[PLAQ][0]Plaq(3,1) = ( 0.545695 , 0.000000 )
+[PLAQ][0]Plaq(3,2) = ( 0.564385 , 0.000000 )
+[MAIN][0]Point Source at (0,0,0,0) 
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 55 ; 55
+[CALC_PROP_CORE][10]QMR_eo MVM = 56
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 55 ; 55
+[CALC_PROP_CORE][10]QMR_eo MVM = 56
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 55 ; 55
+[CALC_PROP_CORE][10]QMR_eo MVM = 56
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 55 ; 55
+[CALC_PROP_CORE][10]QMR_eo MVM = 56
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 55 ; 55
+[CALC_PROP_CORE][10]QMR_eo MVM = 56
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 55 ; 55
+[CALC_PROP_CORE][10]QMR_eo MVM = 56
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 54 ; 54
+[CALC_PROP_CORE][10]QMR_eo MVM = 55
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[CALC_PROPAGATOR][10]n masses=1, mass = -0.8
+[INVERTER][10]g5QMR_mshift: cgiter (mshift,tot) = 53 ; 53
+[CALC_PROP_CORE][10]QMR_eo MVM = 54
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5= 4.181780e-02 4.411102e-03 1.580268e-03 4.403937e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET id= -2.405192e-02 1.471739e-03 3.768762e-04 1.410585e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET id_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0= -4.140285e-02 3.816062e-04 3.034305e-04 2.696282e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0_im= -2.260271e-21 -5.209687e-21 -4.399567e-22 3.402297e-22 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g1= 3.524085e-02 3.118407e-03 1.044770e-03 3.075581e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g1_im= -7.347949e-22 -1.076782e-21 2.292324e-22 1.072310e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g2= 3.367782e-02 2.837579e-03 9.885740e-04 2.789318e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g2_im= 5.714422e-21 -2.218705e-21 -5.729260e-22 -3.063412e-22 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g3= 3.496373e-02 3.111378e-03 1.101110e-03 3.116349e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g3_im= -1.526562e-21 3.356596e-21 -4.424382e-22 4.884760e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g1= 2.827714e-02 2.030103e-03 7.505582e-04 2.004079e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g1_im= -6.182917e-22 -6.711207e-21 1.294680e-21 -4.017293e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g2= 2.967714e-02 2.298353e-03 7.987825e-04 2.218957e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g2_im= -2.114713e-21 -8.064720e-21 -1.349726e-22 4.963588e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g3= 2.871545e-02 2.061961e-03 7.035079e-04 1.986627e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g3_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5= 2.406790e-02 1.510604e-03 5.811339e-04 1.411044e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5_im= 3.106063e-22 -2.370803e-21 -1.816385e-21 -6.772024e-22 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5g1= -2.825214e-02 1.256809e-03 3.959498e-04 1.159369e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5g1_im= -1.065667e-21 1.102011e-21 1.026738e-22 1.442138e-22 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5g2= -2.966103e-02 9.041715e-04 2.671880e-04 8.644400e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5g2_im= 1.813438e-21 -1.128481e-21 -5.117146e-22 -3.195761e-22 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5g3= -2.868022e-02 1.185376e-03 3.076459e-04 1.202441e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5g3_im= -1.500092e-21 1.052070e-21 -5.416999e-22 -8.179731e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5g1= -3.510947e-02 6.593005e-04 2.408621e-04 6.256437e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5g1_im= 1.918620e-21 -1.615193e-21 5.565504e-22 -1.705142e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5g2= -3.352994e-02 1.007261e-03 3.690018e-04 9.738404e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5g2_im= -8.101976e-22 1.036994e-21 -7.269496e-22 -1.407250e-20 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5g3= -3.485273e-02 6.387652e-04 2.820872e-04 5.514494e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0g5g3_im= -0.000000e+00 -0.000000e+00 -0.000000e+00 -0.000000e+00 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5_g0g5_re= -1.384636e-04 -2.036695e-03 1.303126e-04 2.232934e-03 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g5_g0g5_im= 3.428059e-20 -2.160673e-21 1.643401e-21 2.430980e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0_CL_re= -3.563359e-04 -3.563359e-04 -3.563359e-04 -3.563359e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g0_CL_im= -1.315465e-20 6.923502e-21 1.549309e-20 2.188554e-20 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g1_CL_re= -5.101727e-04 6.521091e-04 1.913409e-04 6.285627e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g1_CL_im= 5.188077e-21 5.851476e-21 -9.152753e-22 5.538801e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g2_CL_re= 3.295517e-03 -4.575366e-04 -1.974688e-04 -3.547286e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g2_CL_im= -3.709574e-20 7.497565e-21 -1.578261e-21 5.538801e-21 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g3_CL_re= -7.811642e-04 6.153729e-04 3.511101e-04 6.562714e-04 
+[MAIN][0]conf #1 mass=-0.800000 DEFAULT_POINT TRIPLET g3_CL_im= 3.012261e-20 1.865292e-20 -1.934775e-21 -3.787164e-20 
+[MAIN][0]Configuration #1: analysed in [0 sec 246841 usec]

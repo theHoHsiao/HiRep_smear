@@ -1,20 +1,9 @@
-GLB_T = 48
-GLB_X = 24
-GLB_Y = 24
-GLB_Z = 24
-
 NP_T = 1
 NP_X = 1
 NP_Y = 1
 NP_Z = 1
 
-rlx_level = 1
-rlx_seed = 12345
-rlx_start = new
-rlx_state = rand_state
-
-meas:configlist = list
-meas:mass = -1.045
+level = 1  seed = 12345
 
 nu:inverr2 = 1.e-14
 nu:approx = modenumber.approx

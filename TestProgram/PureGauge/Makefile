@@ -1,8 +1,7 @@
 TOPDIR = ../..
 MKDIR = $(TOPDIR)/Make
 
-TESTS = check_puregauge_1 check_puregauge_2 check_puregauge_4 
-FAIL = check_puregauge_5
+EXES = check_puregauge_1 check_puregauge_2 check_puregauge_3
 
 LIBS += $(TOPDIR)/LibHR/libhr.a
 

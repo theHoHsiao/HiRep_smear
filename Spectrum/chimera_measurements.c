@@ -2,9 +2,9 @@
 //  chimera_measurements.c
 //  hr
 //
-//  Created by Paul Xiao on 2021/4/14.
-//  Copyright © 2021 Claudio Pica. All rights reserved.
+//  Created by Ho Hsiao on 2021/4/14.
 //
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

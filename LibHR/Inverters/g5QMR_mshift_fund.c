@@ -2,14 +2,8 @@
 //  g5QMR_mshift_fund.c
 //  hr
 //
-//  Created by Paul Xiao on 2021/4/7.
-//  Copyright © 2021 Claudio Pica. All rights reserved.
+//  Created by Ho Hsiao on 2021/4/7 for mix representation.
 //
-
-/***************************************************************************\
-* Copyright (c) 2008, Agostino Patella, Claudio Pica                        *
-* All rights reserved.                                                      *
-\***************************************************************************/
 
 #include "inverters.h"
 #include "linear_algebra.h"

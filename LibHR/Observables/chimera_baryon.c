@@ -2,7 +2,7 @@
 //  chimera_baryon.c
 //  hr
 //
-//  Created by Paul Xiao on 2021/4/15.
+//  Created by Ho Hsiao on 2021/4/15 .
 //
 // To calculate chimera baryons in Sp(2N) gauge theory
 
